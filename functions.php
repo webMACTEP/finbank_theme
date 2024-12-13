@@ -3991,6 +3991,43 @@ function myown_comment($comment, $args, $depth)
 
 			wp_die();
 		}
+		// function register_additional_comment_post_type()
+		// {
+		// 	$labels = array(
+		// 		'name'                  => _x('Дополнительные комментарии', 'Post type general name', 'finabank.ru'),
+		// 		'singular_name'         => _x('Дополнительный комментарий', 'Post type singular name', 'finabank.ru'),
+		// 		'menu_name'             => _x('Доп. Комментарии', 'Admin Menu text', 'finabank.ru'),
+		// 		'name_admin_bar'        => _x('Доп. Комментарий', 'Add New on Toolbar', 'finabank.ru'),
+		// 		'add_new'               => __('Добавить новый', 'finabank.ru'),
+		// 		'add_new_item'          => __('Добавить новый комментарий', 'finabank.ru'),
+		// 		'new_item'              => __('Новый комментарий', 'finabank.ru'),
+		// 		'edit_item'             => __('Редактировать комментарий', 'finabank.ru'),
+		// 		'view_item'             => __('Просмотреть комментарий', 'finabank.ru'),
+		// 		'all_items'             => __('Все комментарии', 'finabank.ru'),
+		// 		'search_items'          => __('Найти комментарии', 'finabank.ru'),
+		// 		'not_found'             => __('Комментариев не найдено.', 'finabank.ru'),
+		// 		'not_found_in_trash'    => __('В корзине комментариев не найдено.', 'finabank.ru'),
+		// 	);
+
+		// 	$args = array(
+		// 		'labels'             => $labels,
+		// 		'public'             => false, // Сделать тип записи невидимым на фронтенде
+		// 		'publicly_queryable' => false,
+		// 		'show_ui'            => true, // Отображать в админке
+		// 		'show_in_menu'       => true,
+		// 		'query_var'          => false,
+		// 		'rewrite'            => false,
+		// 		'capability_type'    => 'post',
+		// 		'has_archive'        => false,
+		// 		'hierarchical'       => false,
+		// 		'menu_position'      => 20,
+		// 		'supports'           => array('title', 'editor', 'author'),
+		// 	);
+
+		// 	register_post_type('additional_comment', $args);
+		// }
+		// add_action('init', 'register_additional_comment_post_type');
+
 		function register_additional_comment_post_type()
 		{
 			$labels = array(
@@ -4011,17 +4048,17 @@ function myown_comment($comment, $args, $depth)
 
 			$args = array(
 				'labels'             => $labels,
-				'public'             => false, // Сделать тип записи невидимым на фронтенде
+				'public'             => false,
 				'publicly_queryable' => false,
-				'show_ui'            => true, // Отображать в админке
+				'show_ui'            => true,
 				'show_in_menu'       => true,
 				'query_var'          => false,
 				'rewrite'            => false,
 				'capability_type'    => 'post',
 				'has_archive'        => false,
-				'hierarchical'       => false,
+				'hierarchical'       => true, // Сделать тип записи иерархическим
 				'menu_position'      => 20,
-				'supports'           => array('title', 'editor', 'author'),
+				'supports'           => array('title', 'editor', 'author', 'page-attributes'), // Добавить 'page-attributes' для поддержки порядка
 			);
 
 			register_post_type('additional_comment', $args);
