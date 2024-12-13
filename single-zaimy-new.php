@@ -1319,7 +1319,7 @@ $tags = get_the_tags($ID);
 
 
                     <!-- new-comments -->
-                    <div class="newcomments">
+                    <div class="additional-comments">
                         <?php
                         $current_post_id = get_the_ID();
                         display_additional_comments($current_post_id);

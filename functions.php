@@ -3185,7 +3185,7 @@ function myown_comment($comment, $args, $depth)
 				<?php } ?>
 			</div>
 
-			<?php
+		<?php
 			$table_collection = ob_get_clean();
 			return $table_collection;
 		}
@@ -4066,49 +4066,59 @@ function myown_comment($comment, $args, $depth)
 		add_action('init', 'register_additional_comment_post_type');
 
 
-		function display_additional_comments($post_id)
+		function display_additional_comments($post_id, $parent = 0, $level = 0)
 		{
-			// Получение комментариев
 			$args = array(
 				'post_type'      => 'additional_comment',
+				'post_parent'    => $parent,
 				'meta_query'     => array(
 					array(
-						'key'     => 'related_post', // Название метаполя для связи с постом
+						'key'     => 'related_post',
 						'value'   => $post_id,
 						'compare' => '=',
-						'type'    => 'NUMERIC', // Для корректного сравнения чисел
+						'type'    => 'NUMERIC',
 					),
 				),
 				'posts_per_page' => -1,
 				'orderby'        => 'date',
 				'order'          => 'DESC',
-				'post_status'    => 'publish', // Извлекаем только опубликованные комментарии
+				'post_status'    => 'publish',
 			);
 
-			$additional_comments = new WP_Query($args);
+			$comments = new WP_Query($args);
 
-			if ($additional_comments->have_posts()):
-				echo '<div class="additional-comments">';
-				echo '<h3>Дополнительные комментарии</h3>';
-				while ($additional_comments->have_posts()): $additional_comments->the_post();
+			if ($comments->have_posts()) {
+				echo '<ul class="additional-comments-level-' . esc_attr($level) . '">';
+				while ($comments->have_posts()) {
+					$comments->the_post();
+					$comment_id = get_the_ID();
 					$author_name = get_field('author_name');
 					$author_email = get_field('author_email');
 					$comment_content = get_field('comment_content');
 					$comment_date = get_the_date();
-			?>
-					<div class="additional-comment">
-						<p><strong><?php echo esc_html($author_name); ?></strong> (<?php echo esc_html($author_email); ?>) - <?php echo esc_html($comment_date); ?></p>
-						<p><?php echo esc_html($comment_content); ?></p>
-						<hr>
-					</div>
-		<?php
-				endwhile;
-				echo '</div>';
+
+					echo '<li class="additional-comment">';
+					echo '<div class="additional-comment__header">';
+					echo '<strong>' . esc_html($author_name) . '</strong> (' . esc_html($author_email) . ') - ' . esc_html($comment_date);
+					echo '</div>';
+					echo '<div class="additional-comment__content">' . esc_html($comment_content) . '</div>';
+					// Добавляем кнопку "Ответить"
+					echo '<button class="reply-button btn btn-sm btn-secondary mt-2" data-comment-id="' . esc_attr($comment_id) . '">Ответить</button>';
+
+					// Контейнер для формы ответа
+					echo '<div class="reply-form-container" id="reply-form-container-' . esc_attr($comment_id) . '" style="display: none; margin-top: 15px;"></div>';
+
+					// Рекурсивный вызов для отображения ответов
+					display_additional_comments($post_id, $comment_id, $level + 1);
+
+					echo '</li>';
+				}
+				echo '</ul>';
 				wp_reset_postdata();
-			else:
-				echo '<p>Комментариев пока нет.</p>';
-			endif;
+			}
 		}
+
+
 
 
 
@@ -4117,10 +4127,26 @@ function myown_comment($comment, $args, $depth)
 			wp_enqueue_script('additional-comment-ajax', get_template_directory_uri() . '/js/additional-comment-ajax.js', array('jquery'), '1.0', true);
 
 			wp_localize_script('additional-comment-ajax', 'ajax_object', array(
-				'ajax_url' => admin_url('admin-ajax.php')
+				'ajax_url' => admin_url('admin-ajax.php'),
+				'current_post_id' => get_the_ID(),
+				'reply_nonce' => wp_create_nonce('additional_comment_reply_form'),
 			));
 		}
 		add_action('wp_enqueue_scripts', 'enqueue_additional_comment_ajax_script');
+
+
+		function enqueue_additional_comment_reply_ajax_script(){
+			wp_enqueue_script( 'additional-comment-reply-ajax', get_template_directory_uri() . '/js/additional-comment-reply-ajax.js', array('jquery'), '1.0', true );
+		
+			wp_localize_script( 'additional-comment-reply-ajax', 'ajax_object', array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'current_post_id' => get_the_ID(),
+				'reply_nonce' => wp_create_nonce('additional_comment_reply_form'),
+			));
+		}
+		add_action( 'wp_enqueue_scripts', 'enqueue_additional_comment_reply_ajax_script' );
+		
+
 
 
 		function handle_additional_comment_ajax()
@@ -4198,3 +4224,73 @@ function myown_comment($comment, $args, $depth)
 			}
 		}
 		add_action('acf/save_post', 'set_additional_comment_title', 20);
+
+
+		function handle_additional_comment_reply_ajax(){
+			// Проверка nonce
+			if( ! isset($_POST['additional_comment_reply_nonce']) || ! wp_verify_nonce($_POST['additional_comment_reply_nonce'], 'additional_comment_reply_form') ){
+				wp_send_json_error('Ошибка безопасности.');
+			}
+		
+			// Валидация и Санитизация данных
+			$author_name = sanitize_text_field($_POST['reply_author_name']);
+			$author_email = sanitize_email($_POST['reply_author_email']);
+			$comment_content = sanitize_textarea_field($_POST['reply_comment_content']);
+			$related_post = intval($_POST['reply_related_post']);
+			$parent_comment = intval($_POST['reply_parent_comment']);
+		
+			// Проверка существования связанного поста
+			if( ! get_post($related_post) ){
+				wp_send_json_error('Указанный пост не найден.');
+			}
+		
+			// Проверка существования родительского комментария
+			if( ! get_post($parent_comment) || get_post_type($parent_comment) != 'additional_comment' ){
+				wp_send_json_error('Родительский комментарий не найден.');
+			}
+		
+			// Создание новой записи ответа
+			$new_comment = array(
+				'post_content'  => $comment_content,
+				'post_status'   => 'pending', // Или 'publish' сразу
+				'post_type'     => 'additional_comment',
+				'post_author'   => get_current_user_id(),
+				'post_parent'   => $parent_comment, // Установка родительского комментария
+			);
+		
+			$comment_id = wp_insert_post($new_comment);
+		
+			if( $comment_id ){
+				// Добавление метаполей
+				update_field('author_name', $author_name, $comment_id);
+				update_field('author_email', $author_email, $comment_id);
+				update_field('related_post', $related_post, $comment_id);
+				update_field('comment_content', $comment_content, $comment_id);
+				// Добавьте другие метаполя при необходимости
+		
+				// Установка post_title после обновления метаполей
+				$new_title = $author_name . ' (' . $author_email . ')';
+				wp_update_post(array(
+					'ID'         => $comment_id,
+					'post_title' => $new_title,
+				));
+		
+				// Форматируем дату для вывода
+				$comment_date = get_the_date('', $comment_id);
+		
+				// Возвращаем данные для отображения
+				wp_send_json_success(array(
+					'author_name' => $author_name,
+					'author_email' => $author_email,
+					'comment_content' => $comment_content,
+					'comment_date' => $comment_date,
+					'comment_id' => $comment_id,
+				));
+			}
+			else{
+				wp_send_json_error('Произошла ошибка при отправке комментария.');
+			}
+		}
+		add_action('wp_ajax_handle_additional_comment_reply_ajax', 'handle_additional_comment_reply_ajax');
+		add_action('wp_ajax_nopriv_handle_additional_comment_reply_ajax', 'handle_additional_comment_reply_ajax');
+		
