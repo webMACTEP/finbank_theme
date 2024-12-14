@@ -6,10 +6,11 @@ jQuery(document).ready(function($){
 
         // Проверяем, есть ли уже форма
         if (formContainer.children().length === 0) {
-            // Копируем HTML формы и заменяем __COMMENT_ID__ на реальный ID
+            // Вставляем HTML формы
             var formHtml = `
                 <form class="reply-form" data-parent-id="${commentId}">
-                    <input type="hidden" name="additional_comment_reply_nonce" value="${ajax_object.reply_nonce}">
+                    <input type="hidden" name="action" value="handle_additional_comment_reply_ajax">
+                    <input type="hidden" name="additional_comment_reply_nonce" value="${ajax_object_reply.reply_nonce}">
                     <div class="form-group">
                         <label for="reply_author_name_${commentId}">Имя</label>
                         <input type="text" id="reply_author_name_${commentId}" name="reply_author_name" class="form-control" required>
@@ -22,7 +23,7 @@ jQuery(document).ready(function($){
                         <label for="reply_comment_content_${commentId}">Комментарий</label>
                         <textarea id="reply_comment_content_${commentId}" name="reply_comment_content" class="form-control" rows="5" required></textarea>
                     </div>
-                    <input type="hidden" name="reply_related_post" value="${ajax_object.current_post_id}" />
+                    <input type="hidden" name="reply_related_post" value="${ajax_object_reply.current_post_id}" />
                     <input type="hidden" name="reply_parent_comment" value="${commentId}" />
                     <button type="submit" class="btn btn-primary mt-2">Отправить</button>
                 </form>
@@ -52,9 +53,13 @@ jQuery(document).ready(function($){
         };
 
         $.ajax({
-            url: ajax_object.ajax_url,
+            url: ajax_object_reply.ajax_url,
             type: 'POST',
             data: formData,
+            beforeSend: function(){
+                // Можно добавить спиннер или индикатор загрузки
+                form.find('button[type="submit"]').prop('disabled', true).text('Отправка...');
+            },
             success: function(response){
                 if(response.success){
                     // Очистить форму и скрыть её
@@ -68,31 +73,40 @@ jQuery(document).ready(function($){
                                 <strong>${escapeHtml(response.data.author_name)}</strong> (${escapeHtml(response.data.author_email)}) - ${response.data.comment_date}
                             </div>
                             <div class="additional-comment__content">${escapeHtml(response.data.comment_content)}</div>
-                            <button class="reply-button btn btn-sm btn-secondary mt-2" data-comment-id="${response.data.comment_id}">Ответить</button>
-                            <div class="reply-form-container" id="reply-form-container-${response.data.comment_id}" style="display: none;"></div>
+                            <div class="additional-comment__actions">
+                                <button class="like-button btn btn-sm btn-outline-success" data-comment-id="${response.data.comment_id}">👍 <span class="like-count">0</span></button> 
+                                <button class="dislike-button btn btn-sm btn-outline-danger" data-comment-id="${response.data.comment_id}">👎 <span class="dislike-count">0</span></button> 
+                                <button class="reply-button btn btn-sm btn-secondary ml-2" data-comment-id="${response.data.comment_id}">Ответить</button>
+                            </div>
+                            <div class="reply-form-container" id="reply-form-container-${response.data.comment_id}" style="display: none; margin-top: 15px;"></div>
                         </li>
                     `;
 
                     // Найти родительский комментарий и добавить ответ
-                    $('#collapse__item-' + parentId + ' .accordion__body').append(newCommentHtml);
+                    $('button[data-comment-id="' + parentId + '"]').closest('.additional-comment').children('ul').append(newCommentHtml);
                 }
                 else{
-                    alert(response.data);
+                    // Выводим ошибку
+                    form.after('<div class="comment-error">' + response.data + '</div>');
                 }
+                form.find('button[type="submit"]').prop('disabled', false).text('Отправить');
             },
             error: function(){
                 alert('Произошла ошибка. Пожалуйста, попробуйте снова.');
+                form.find('button[type="submit"]').prop('disabled', false).text('Отправить');
             }
         });
     });
 
     // Функция для экранирования HTML
     function escapeHtml(text) {
-        return text
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
     }
 });

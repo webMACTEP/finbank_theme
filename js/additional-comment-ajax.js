@@ -1,38 +1,34 @@
 jQuery(document).ready(function($){
-    $('form').on('submit', function(e){
-        // Проверяем, что это наша форма (можно добавить проверку по ID или классу)
-        if ($(this).attr('action') === '') {
-            e.preventDefault();
+    $('#additional-comment-form').on('submit', function(e){
+        e.preventDefault();
 
-            var form = $(this);
-            var formData = form.serialize();
+        var formData = $(this).serialize();
 
-            $.ajax({
-                url: ajax_object.ajax_url,
-                type: 'POST',
-                data: formData + '&action=handle_additional_comment_ajax',
-                success: function(response){
-                    if(response.success){
-                        form.find('.success-message').remove();
-                        form.find('.error-message').remove();
-                        form.prepend('<p class="success-message">' + response.data + '</p>');
-                        form[0].reset();
-
-                        // Если комментарий автоматически публикуется, можно добавить его в список
-                        // Однако, если он ожидает модерации, этого делать не нужно
-                    }
-                    else{
-                        form.find('.success-message').remove();
-                        form.find('.error-message').remove();
-                        form.prepend('<p class="error-message">' + response.data + '</p>');
-                    }
-                },
-                error: function(){
-                    form.find('.success-message').remove();
-                    form.find('.error-message').remove();
-                    form.prepend('<p class="error-message">Произошла ошибка. Пожалуйста, попробуйте снова.</p>');
+        $.ajax({
+            url: ajax_object_comment.ajax_url,
+            type: 'POST',
+            data: formData,
+            beforeSend: function(){
+                // Можно добавить спиннер или индикатор загрузки
+                $('#additional-comment-form .submit-button').prop('disabled', true).text('Отправка...');
+            },
+            success: function(response){
+                if(response.success){
+                    // Выводим сообщение об успешной отправке
+                    $('#additional-comment-form').after('<div class="comment-success">' + response.data + '</div>');
+                    // Сбрасываем форму
+                    $('#additional-comment-form')[0].reset();
                 }
-            });
-        }
+                else{
+                    // Выводим ошибку
+                    $('#additional-comment-form').after('<div class="comment-error">' + response.data + '</div>');
+                }
+                $('#additional-comment-form .submit-button').prop('disabled', false).text('Отправить');
+            },
+            error: function(){
+                alert('Произошла ошибка. Пожалуйста, попробуйте снова.');
+                $('#additional-comment-form .submit-button').prop('disabled', false).text('Отправить');
+            }
+        });
     });
 });
