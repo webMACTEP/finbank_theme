@@ -1122,13 +1122,13 @@ $tags = get_the_tags($ID);
                     <?php endif; ?>
                     <!-- / author -->
 
-                    <!-- comments -->
+                    <!-- reviews -->
                     <div id="comments" class="section">
                         <div class="section__header mb-4 d-flex justify-content-between align-items-center">
-                            <h2 class="title mb-0">Комментарии</h2>
+                            <h2 class="title mb-0">Отзывы</h2>
 
                             <a class="btn btn-primary btn-sm" href="#commentForm">
-                                Оставить комментарий
+                                Оставить отзыв
                             </a>
                         </div>
                         <div class="comments">
@@ -1300,7 +1300,7 @@ $tags = get_the_tags($ID);
                             <?php if (count($comments) != "0"): ?>
                                 <div class="comments__action text-center">
                                     <a href="<?php //echo  get_page_link(1503); 
-                                                ?><?php the_permalink(); ?>comments/" class="btn btn-outline-alternative" post-id="<?php echo $ID ?>">Больше комментариев</a>
+                                                ?><?php the_permalink(); ?>comments/" class="btn btn-outline-alternative" post-id="<?php echo $ID ?>">Больше отзывов</a>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -1315,44 +1315,47 @@ $tags = get_the_tags($ID);
 
                         </div>
                     </div>
-                    <!-- / form and comments -->
+                    <!-- / form and reviews -->
 
 
                     <!-- new-comments -->
-                    <div class="additional-comments">
-                        <?php
-                        $current_post_id = get_the_ID();
-                        display_additional_comments($current_post_id);
-                        ?>
-                    </div>
-                    <div class="new-comment-form">
-                        <?php if (is_user_logged_in()): ?>
-                            <h3>Оставить комментарий</h3>
-                            <form action="" method="post">
-
-
-                                <?php wp_nonce_field('additional_comment_form', 'additional_comment_nonce'); ?>
-
-                                <div class="form-group">
-                                    <label for="acf-field_author_name">Имя</label>
-                                    <input type="text" id="acf-field_author_name" name="acf[field_675ae76ee8992]" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="acf-field_author_email">E-Mail</label>
-                                    <input type="email" id="acf-field_author_email" name="acf[field_675ae7d4b0bdc]" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="acf-field_comment_content">Комментарий</label>
-                                    <textarea id="acf-field_comment_content" name="acf[field_675ae80ab0bdd]" class="form-control" rows="5" required></textarea>
-                                </div>
-                                <!-- Добавьте другие поля по необходимости -->
-                                <input type="hidden" name="acf[field_related_post]" value="<?php echo esc_attr(get_the_ID()); ?>" />
-                                <button type="submit" class="btn btn-primary">Отправить</button>
-                            </form>
-                        <?php else: ?>
-                            <p>Пожалуйста, <a href="<?php echo esc_url(wp_login_url()); ?>">войдите</a>, чтобы оставить комментарий.</p>
-                        <?php endif; ?>
-                    </div>
+                     <div class="section">
+                     <h2 class="title mb-0">Комментарии</h2>
+                         <div class="additional-comments">
+                             <?php
+                             $current_post_id = get_the_ID();
+                             display_additional_comments($current_post_id);
+                             ?>
+                         </div>
+                         <div class="new-comment-form">
+                             <?php if (is_user_logged_in()): ?>
+                                 <h3>Оставить комментарий</h3>
+                                 <form action="" method="post">
+     
+     
+                                     <?php wp_nonce_field('additional_comment_form', 'additional_comment_nonce'); ?>
+     
+                                     <div class="form-group">
+                                         <label for="acf-field_author_name">Имя</label>
+                                         <input type="text" id="acf-field_author_name" name="acf[field_675ae76ee8992]" class="form-control" required>
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="acf-field_author_email">E-Mail</label>
+                                         <input type="email" id="acf-field_author_email" name="acf[field_675ae7d4b0bdc]" class="form-control" required>
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="acf-field_comment_content">Комментарий</label>
+                                         <textarea id="acf-field_comment_content" name="acf[field_675ae80ab0bdd]" class="form-control" rows="5" required></textarea>
+                                     </div>
+                                     <!-- Добавьте другие поля по необходимости -->
+                                     <input type="hidden" name="acf[field_related_post]" value="<?php echo esc_attr(get_the_ID()); ?>" />
+                                     <button type="submit" class="btn btn-primary">Отправить</button>
+                                 </form>
+                             <?php else: ?>
+                                 <p>Пожалуйста, <a href="<?php echo esc_url(wp_login_url()); ?>">войдите</a>, чтобы оставить комментарий.</p>
+                             <?php endif; ?>
+                         </div>
+                     </div>
                     <!-- /new-comments -->
 
 
