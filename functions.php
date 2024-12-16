@@ -4082,7 +4082,7 @@ function myown_comment($comment, $args, $depth)
 
 					echo '<li class="additional-comment">';
 					echo '<div class="additional-comment__header">';
-					echo '<strong>' . esc_html($author_name) . '</strong> (' . esc_html($author_email) . ') - ' . esc_html($comment_date);
+					echo '<div class="comment__one-title mb-2 mb-md-0">' . esc_html($author_name) . '</div> <div class="comment__one-date mr-md-4 order-md-1">' . esc_html($comment_date) . '</div>';
 					echo '</div>';
 					echo '<div class="additional-comment__content">' . esc_html($comment_content) . '</div>';
 
@@ -4090,7 +4090,7 @@ function myown_comment($comment, $args, $depth)
 					echo '<div class="additional-comment__actions">';
 					echo '<button class="like-button btn btn-sm btn-outline-success" data-comment-id="' . esc_attr($comment_id) . '">👍 <span class="like-count">' . $likes . '</span></button> ';
 					echo '<button class="dislike-button btn btn-sm btn-outline-danger" data-comment-id="' . esc_attr($comment_id) . '">👎 <span class="dislike-count">' . $dislikes . '</span></button> ';
-					echo '<button class="reply-button btn btn-sm btn-secondary ml-2" data-comment-id="' . esc_attr($comment_id) . '">Ответить</button>';
+					echo '<button class="reply-button btn" data-comment-id="' . esc_attr($comment_id) . '">Ответить</button>';
 					echo '</div>';
 
 					// Контейнер для формы ответа

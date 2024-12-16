@@ -5415,10 +5415,73 @@ a.cld-like-dislike-trigger {
   color: #fff;
 }
 
+.zaimy-new .reviews {
+  display: flex;
+  justify-content: space-between;
+  min-width: 100%;
+  gap: 12px;
+}
+.zaimy-new .reviews .comment__one-content {
+  display: -webkit-box; /* Используется для реализации ограничения строк */
+  -webkit-box-orient: vertical; /* Задает ориентацию текста */
+  -webkit-line-clamp: 10; /* Ограничивает количество строк */
+  overflow: hidden; /* Скрывает текст, выходящий за пределы */
+  text-overflow: ellipsis; /* Добавляет троеточие для обрезанного текста */
+  white-space: normal;
+  margin-top: 0;
+  flex-grow: 1;
+}
+.zaimy-new .reviews .comment__one-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+.zaimy-new .reviews .comment__one-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.zaimy-new .reviews .post-ratings img {
+  width: 17px;
+  height: 17px;
+}
+.zaimy-new .reviews .post-ratings span {
+  display: none;
+}
+.zaimy-new .reviews .comment__one ~ .comment__one {
+  margin-top: 0;
+}
+.zaimy-new .reviews .comment__one-img {
+  width: 46px;
+  height: 46px;
+}
+.zaimy-new .reviews .comment__one {
+  min-width: calc(33.33% - 24px);
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px var(--tag-shadow);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.zaimy-new .additional-comments .reply-button {
+  font-size: 14px;
+  color: var(--gray-600);
+  font-weight: 400;
+}
+.zaimy-new .additional-comments .additional-comment__content {
+  font-size: 14px;
+}
+.zaimy-new .additional-comments li {
+  margin-bottom: 2rem;
+  color: var(--black);
+}
 .zaimy-new .additional-comment__actions {
   margin-top: 10px;
 }
-.zaimy-new .like-button, .zaimy-new .dislike-button {
+.zaimy-new .like-button,
+.zaimy-new .dislike-button {
   cursor: pointer;
   margin-right: 5px;
   border: none;
@@ -5426,11 +5489,13 @@ a.cld-like-dislike-trigger {
   padding: 0;
   font-size: 14px;
 }
-.zaimy-new .like-button.disabled, .zaimy-new .dislike-button.disabled {
+.zaimy-new .like-button.disabled,
+.zaimy-new .dislike-button.disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
-.zaimy-new .like-button .like-count, .zaimy-new .dislike-button .dislike-count {
+.zaimy-new .like-button .like-count,
+.zaimy-new .dislike-button .dislike-count {
   margin-left: 5px;
   font-weight: bold;
 }
@@ -6045,6 +6110,9 @@ a.cld-like-dislike-trigger {
 }
 
 @media (max-width: 768px) {
+  .zaimy-new .reviews {
+    flex-direction: column;
+  }
   .zaimy-new .content-promo .items .right {
     margin: 0px auto;
   }

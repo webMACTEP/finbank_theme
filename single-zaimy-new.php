@@ -1125,13 +1125,9 @@ $tags = get_the_tags($ID);
                     <!-- reviews -->
                     <div id="comments" class="section">
                         <div class="section__header mb-4 d-flex justify-content-between align-items-center">
-                            <h2 class="title mb-0">Отзывы</h2>
-
-                            <a class="btn btn-primary btn-sm" href="#commentForm">
-                                Оставить отзыв
-                            </a>
+                            <h2 class="title mb-0">Отзывы пользователей и должников</h2>
                         </div>
-                        <div class="comments">
+                        <div class="comments reviews mb-4">
                             <?php
                             $comments = get_comments(array(
                                 'post_id' => $ID,
@@ -1160,150 +1156,58 @@ $tags = get_the_tags($ID);
                                 ));
                                 $responses = count($comments_children); ?>
                                 <!-- item -->
-                                <div class="comments__item mb-4 " id="comment-<?php echo $comment_id ?>">
+                                <div class="comment__one p-4" id="comment-<?php echo $comment_id ?>">
                                     <!-- comment -->
-                                    <div class="comment__one">
-                                        <div class="comment__one-header d-flex align-items-center">
-                                            <div class="comment__one-img mr-3">
-                                                <img src="<?php echo get_avatar_url($comment, array(
-                                                                'default' => 'identicon',
-                                                            )); ?>" alt="<?php $comment->comment_author ?>">
-                                            </div>
-                                            <div class="d-md-flex justify-content-md-between w-100">
-                                                <div class="comment__one-title mb-2 mb-md-0">
-                                                    <?php echo $comment->comment_author; ?>
-                                                </div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="card__icon d-flex align-items-center ml-3 ml-sm-4">
-                                                        <div class="mr-2"><svg width="14" height="19" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
-                                                                <use xlink:href="<?php bloginfo('template_url'); ?>/img/icons.svg#person" x="0" y="0"></use>
-                                                            </svg></div>
-                                                        <?php if (empty($user_role[0])):
-                                                            echo 'Гость';
-                                                        else:
-                                                            echo $user_role[0];
-                                                        endif; ?>
-                                                    </div>
-                                                    <div class="card__icon d-flex align-items-center ml-3 ml-sm-4">
-                                                        <div class="mr-2"><svg width="18" height="19" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
-                                                                <use xlink:href="<?php bloginfo('template_url'); ?>/img/icons.svg#house" x="0" y="0"></use>
-                                                            </svg></div>
-                                                        <?php $z_org = get_field('z_organization');
-                                                        //$value = $z_org['value'];
-                                                        //$label = $z_org['choices'][$value];
-                                                        //echo $z_org['label'] 
-                                                        ?>
-                                                        <?php get_field('z_organization_name'); ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="comment__one-content">
-                                            <?php echo $comment->comment_content; ?>
-                                        </div>
-                                        <div class="comment__one-footer d-flex flex-wrap align-items-center">
-                                            <?php echo comment_reply_link(['reply_text' => "Ответить", 'depth' => -1], $comment_id,); ?>
-                                            <div class="comment__one-date mr-md-4 order-md-1">
-                                                <?php echo  get_comment_date('d.m.y'); ?> в
-                                                <?php echo get_comment_date('H:i') ?>
-                                            </div>
-                                            <div class="comment__one-like order-md-4 ml-auto d-flex justify-content-between">
-                                                <?php comments_like_dislike($comment_id); ?>
-                                            </div>
-                                            <?php if ($responses > 0): ?>
-                                                <div class="comment__one-btn order-md-2 mr-md-4">
-                                                    <button class="btn btn-outline-light btn-xs collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#answ__<?php echo $counter ?>" aria-expanded="false">
-                                                        <?php echo $responses ?>
-                                                        <?php if ($responses == 1):
-                                                            echo 'Ответ';
-                                                        endif; ?>
-                                                        <?php if (2 <= $responses &&  $responses <= 4):
-                                                            echo 'Ответа';
-                                                        endif; ?>
-                                                        <?php if ($responses >= 4):
-                                                            echo 'Ответов';
-                                                        endif; ?>
-                                                        <svg width="12" height="6" viewBox="0 0 12 6">
-                                                            <use xlink:href="<?php bloginfo('template_url'); ?>/img/icons.svg#arrow" x="0" y="0"></use>
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                    <!-- comment -->
-                                    <?php if ($responses > 0): ?>
-                                        <?php foreach ($comments_children as $comment_children) {
-                                            $comment_id_children = $comment_children->comment_ID;
-                                            $comment_post_id = $comment_children->comment_post_ID;
-                                            $user = get_userdata($comment_children->user_id);
-                                            $user_role = $user->roles;
-                                            $user_email = $user->user_email; ?>
-                                            <div class="collapse comment__one-collapse" id="answ__<?php echo $counter ?>">
-                                                <div class="comment__one-hidden">
-                                                    <!-- comment -->
-                                                    <div class="comment__one">
-                                                        <div class="comment__one-header d-flex align-items-center">
-                                                            <div class="comment__one-img mr-3">
-                                                                <img src="<?php echo get_avatar_url($comment, array(
-                                                                                'default' => 'identicon',
-                                                                            )); ?>" alt="">
-                                                            </div>
-                                                            <div class="d-md-flex justify-content-md-between w-100">
-                                                                <div class="comment__one-title mb-2 mb-md-0"><?php echo $comment_children->comment_author; ?></div>
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="card__icon d-flex align-items-center ml-3 ml-sm-4">
-                                                                        <div class="mr-2"><svg width="14" height="19" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
-                                                                                <use xlink:href="<?php bloginfo('template_url'); ?>/img/icons.svg#person" x="0" y="0"></use>
-                                                                            </svg></div>
-                                                                        <?php if ($user_role[0] == ''):
-                                                                            echo 'Гость';
-                                                                        endif;
-                                                                        if ($user_role[0] != ''):
-                                                                            echo $user_role[0];
-                                                                        endif; ?>
-                                                                    </div>
-                                                                    <div class="card__icon d-flex align-items-center ml-3 ml-sm-4">
-                                                                        <div class="mr-2"><svg width="18" height="19" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg" xml:space="preserve">
-                                                                                <use xlink:href="<?php bloginfo('template_url'); ?>/img/icons.svg#house" x="0" y="0"></use>
-                                                                            </svg></div>
-                                                                        <?php $bank_id = get_field('bank_choise', $comment_post_id); ?>
-                                                                        <?php // echo get_the_title($bank_id); 
-                                                                        ?>
-                                                                        <?php get_field('z_organization_name'); ?>
 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="comment__one-content">
-                                                            <?php echo $comment_children->comment_content; ?>
-                                                        </div>
-                                                        <div class="comment__one-footer d-flex flex-wrap align-items-center">
-                                                            <div class="comment__one-date mr-md-4 order-md-1">
-                                                                <?php echo  get_comment_date('d.m.y', $comment_id_children); ?> в
-                                                                <?php echo get_comment_date('H:i', $comment_id_children); ?>
-                                                            </div>
-                                                            <div class="comment__one-like order-md-4 ml-auto d-flex justify-content-between">
-                                                                <?php comments_like_dislike($comment_id_children); ?>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- comment -->
-                                                </div>
+                                    <div class="comment__one-header">
+                                        <div class="comment__one-info">
+                                            <div class=""><?php echo the_title() ?></div>
+                                            <div class="rating d-flex align-items-center mt-3 mt-xl-n1">
+                                                <?php echo do_shortcode('[ratings id="' . $ID . '"]'); ?>
                                             </div>
-                                    <?php }
-                                    endif; ?>
+                                        </div>
+
+                                        <div class="comment__one-img">
+                                            <img src="<?php the_field('z_organization_logo', get_the_ID()); ?>"
+                                                alt="<?php
+                                                        $logo_id = get_field('z_organization_logo', get_the_ID(), false);
+                                                        $logo_alt = get_post_meta($logo_id, '_wp_attachment_image_alt', true);
+                                                        echo esc_attr($logo_alt);
+                                                        ?>">
+                                        </div>
+
+                                    </div>
+                                    <div class="comment__one-title">
+                                        <?php echo $comment->comment_author; ?>
+                                    </div>
+                                    <div class="comment__one-content">
+                                        <?php echo $comment->comment_content; ?>
+                                    </div>
+                                    <div class="comment__one-footer">
+
+                                        <div class="comment__one-date mr-md-4 order-md-1">
+                                            <?php echo  get_comment_date('d.m.y'); ?> в
+                                            <?php echo get_comment_date('H:i') ?>
+                                        </div>
+
+
+                                    </div>
+
+                                    <!-- comment -->
+
                                 </div>
                                 <!-- /item -->
                             <?php } ?>
-                            <?php if (count($comments) != "0"): ?>
-                                <div class="comments__action text-center">
-                                    <a href="<?php //echo  get_page_link(1503); 
-                                                ?><?php the_permalink(); ?>comments/" class="btn btn-outline-alternative" post-id="<?php echo $ID ?>">Больше отзывов</a>
-                                </div>
-                            <?php endif; ?>
                         </div>
+                        <?php if (count($comments) != "0"): ?>
+                            <div class="comments__action">
+                                <a class="btn btn-primary" href="#commentForm">
+                                    Оставить отзыв
+                                </a>
+                                <a href="<?php //echo  get_page_link(1503); 
+                                            ?><?php the_permalink(); ?>comments/" class="btn btn-outline-alternative" post-id="<?php echo $ID ?>">Все отзывы</a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="section">
                         <!-- form -->
@@ -1320,7 +1224,7 @@ $tags = get_the_tags($ID);
 
                     <!-- new-comments -->
                     <div class="section">
-                        <h2 class="title mb-0">Комментарии</h2>
+                        <h2 class="title mb-3">Комментарии</h2>
                         <div class="additional-comments">
                             <?php
                             $current_post_id = get_the_ID();
@@ -1328,34 +1232,49 @@ $tags = get_the_tags($ID);
                             ?>
                         </div>
                         <div class="new-comment-form">
-                            <?php // if (is_user_logged_in()): ?>
-                                <h3>Оставить комментарий</h3>
-                                <form id="additional-comment-form" method="post">
-                                    <input type="hidden" name="action" value="handle_additional_comment_ajax">
-                                    <input type="hidden" name="additional_comment_nonce" value="<?php echo wp_create_nonce('additional_comment_form'); ?>">
-                                    <div class="form-group">
-                                        <label for="author_name">Имя</label>
-                                        <input type="text" id="author_name" name="acf[field_675ae76ee8992]" class="form-control" required>
+                            <?php // if (is_user_logged_in()): 
+                            ?>
+                            <!-- <h3>Оставить комментарий</h3> -->
+                            <form id="additional-comment-form" method="post" class="row">
+                                <input type="hidden" name="action" value="handle_additional_comment_ajax">
+                                <input type="hidden" name="additional_comment_nonce" value="<?php echo wp_create_nonce('additional_comment_form'); ?>">
+                                <div class="form-group col-12 col-md-6">
+                                    <!-- <label for="author_name">Имя</label> -->
+                                    <div class="mb-3">
+                                        <input type="text" id="author_name" name="acf[field_675ae76ee8992]" class="form-control" placeholder="Имя*" required>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="author_email">E-Mail</label>
-                                        <input type="email" id="author_email" name="acf[field_675ae7d4b0bdc]" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="comment_content">Комментарий</label>
-                                        <textarea id="comment_content" name="acf[field_675ae80ab0bdd]" class="form-control" rows="5" required></textarea>
-                                    </div>
-                                    <input type="hidden" name="acf[field_related_post]" value="<?php echo get_the_ID(); ?>" />
-                                    <button type="submit" class="btn btn-primary submit-button">Отправить</button>
-                                </form>
 
-                            <?php // else: ?>
-                                <!-- <p>Пожалуйста, <a href="<?php // echo esc_url(wp_login_url()); ?>">войдите</a>, чтобы оставить комментарий.</p> -->
-                            <?php // endif; ?>
+                                </div>
+                                <div class="form-group col-12 col-md-6">
+                                    <!-- <label for="author_email">E-Mail</label> -->
+                                    <div class="mb-3">
+                                        <input type="email" id="author_email" name="acf[field_675ae7d4b0bdc]" class="form-control" placeholder="E-Mail*" required>
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-12">
+                                    <!-- <label for="comment_content">Комментарий</label> -->
+                                    <textarea id="comment_content" name="acf[field_675ae80ab0bdd]" class="form-control" rows="4" placeholder="Ваш комментарий*" required></textarea>
+                                </div>
+                                <div class="form-comment__bottom">* - Обязательно заполнить</div>
+                                <input type="hidden" name="acf[field_related_post]" value="<?php echo get_the_ID(); ?>" />
+                                <div class="col-12">
+                                    <div class="mt-3">
+                                        <button type="submit" class="btn btn-primary px-5">Отправить</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <?php // else: 
+                            ?>
+                            <!-- <p>Пожалуйста, <a href="<?php // echo esc_url(wp_login_url()); 
+                                                            ?>">войдите</a>, чтобы оставить комментарий.</p> -->
+                            <?php // endif; 
+                            ?>
                         </div>
                     </div>
                     <!-- /new-comments -->
-
 
                 </div>
                 <div id="content-lk" class="content-block content-lk col-12 col-md-9 col-lg-8 order-md-1">

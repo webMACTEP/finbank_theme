@@ -8,24 +8,30 @@ jQuery(document).ready(function($){
         if (formContainer.children().length === 0) {
             // Вставляем HTML формы
             var formHtml = `
-                <form class="reply-form" data-parent-id="${commentId}">
+                <form class="reply-form row" data-parent-id="${commentId}">
                     <input type="hidden" name="action" value="handle_additional_comment_reply_ajax">
                     <input type="hidden" name="additional_comment_reply_nonce" value="${ajax_object_reply.reply_nonce}">
-                    <div class="form-group">
-                        <label for="reply_author_name_${commentId}">Имя</label>
-                        <input type="text" id="reply_author_name_${commentId}" name="reply_author_name" class="form-control" required>
+                    <div class="form-group col-12 col-md-6">
+                        <div class="mb-3">
+                        <input type="text" id="reply_author_name_${commentId}" name="reply_author_name" class="form-control" placeholder="Имя*" required>
+                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="reply_author_email_${commentId}">E-Mail</label>
-                        <input type="email" id="reply_author_email_${commentId}" name="reply_author_email" class="form-control" required>
+                    <div class="form-group col-12 col-md-6">
+                    <div class="mb-3">
+                        <input type="email" id="reply_author_email_${commentId}" name="reply_author_email" class="form-control" placeholder="E-Mail*" required>
                     </div>
-                    <div class="form-group">
-                        <label for="reply_comment_content_${commentId}">Комментарий</label>
-                        <textarea id="reply_comment_content_${commentId}" name="reply_comment_content" class="form-control" rows="5" required></textarea>
                     </div>
+                    <div class="form-group col-12">
+                        <textarea id="reply_comment_content_${commentId}" name="reply_comment_content" class="form-control" rows="4" placeholder="Ваш ответ*" required></textarea>
+                    </div>
+                    <div class="form-comment__bottom">* - Обязательно заполнить</div>
                     <input type="hidden" name="reply_related_post" value="${ajax_object_reply.current_post_id}" />
                     <input type="hidden" name="reply_parent_comment" value="${commentId}" />
-                    <button type="submit" class="btn btn-primary mt-2">Отправить</button>
+                    <div class="col-12">
+                    <div class="mt-3">
+                    <button type="submit" class="btn btn-primary px-5">Отправить</button>
+                     </div>
+                    </div>
                 </form>
             `;
             formContainer.html(formHtml);
