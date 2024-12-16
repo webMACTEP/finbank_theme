@@ -1328,7 +1328,7 @@ $tags = get_the_tags($ID);
                             ?>
                         </div>
                         <div class="new-comment-form">
-                            <?php if (is_user_logged_in()): ?>
+                            <?php // if (is_user_logged_in()): ?>
                                 <h3>Оставить комментарий</h3>
                                 <form id="additional-comment-form" method="post">
                                     <input type="hidden" name="action" value="handle_additional_comment_ajax">
@@ -1349,9 +1349,9 @@ $tags = get_the_tags($ID);
                                     <button type="submit" class="btn btn-primary submit-button">Отправить</button>
                                 </form>
 
-                            <?php else: ?>
-                                <p>Пожалуйста, <a href="<?php echo esc_url(wp_login_url()); ?>">войдите</a>, чтобы оставить комментарий.</p>
-                            <?php endif; ?>
+                            <?php // else: ?>
+                                <!-- <p>Пожалуйста, <a href="<?php // echo esc_url(wp_login_url()); ?>">войдите</a>, чтобы оставить комментарий.</p> -->
+                            <?php // endif; ?>
                         </div>
                     </div>
                     <!-- /new-comments -->
