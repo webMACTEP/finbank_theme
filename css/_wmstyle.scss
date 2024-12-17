@@ -76,6 +76,7 @@
             font-size: 14px;
         }
         li {
+            list-style-type: none;
             margin-bottom: 2rem;
             color: var(--black);
         }
@@ -134,6 +135,7 @@
         border-radius: 0;
     }
     #faq,
+    #best-offers,
     #comments,
     #content-about,
     #content-lk,

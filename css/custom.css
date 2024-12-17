@@ -5474,6 +5474,7 @@ a.cld-like-dislike-trigger {
   font-size: 14px;
 }
 .zaimy-new .additional-comments li {
+  list-style-type: none;
   margin-bottom: 2rem;
   color: var(--black);
 }
@@ -5524,6 +5525,7 @@ a.cld-like-dislike-trigger {
   border-radius: 0;
 }
 .zaimy-new #faq,
+.zaimy-new #best-offers,
 .zaimy-new #comments,
 .zaimy-new #content-about,
 .zaimy-new #content-lk,

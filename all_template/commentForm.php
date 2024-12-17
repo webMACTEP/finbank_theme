@@ -52,7 +52,7 @@ $defaults = [
                     </div>',
     ],
     'comment_field'        => '<div class="col-12">
-                                    <textarea id="comment" post-id="' . esc_attr($post_id) . '" name="comment" class="form-control input-comment-trigger" placeholder="Ваш комментарий / отзыв*" rows="4" aria-required="true" required="required"></textarea>
+                                    <textarea id="comment" post-id="' . esc_attr($post_id) . '" name="comment" class="form-control input-comment-trigger" placeholder="Ваш отзыв*" rows="4" aria-required="true" required="required"></textarea>
                                     <div class="form-comment__bottom">* - Обязательно заполнить</div>
                                 </div>',
     'logged_in_as'         => is_user_logged_in() ? '<div class="col-12 mb-2">' .
