@@ -1,5 +1,12 @@
 <?php
 
+add_filter( 'document_title', 'wp_kama_document_title_filter' );
+
+function wp_kama_document_title_filter( $title ){
+    return 'ЗЗЗ';
+}
+
+
 if($_REQUEST['change_template']){
     get_template_part( 'template-parts/new-collection-kredity' );
 }else {

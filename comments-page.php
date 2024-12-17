@@ -557,7 +557,7 @@ if($ID != ''  && $DISPLAY == 'comments'): ?>
                         <h1 class="title mb-0">Отзывы о <?php echo $title_term ?> "<?php echo get_the_title($ID) ?>"</h1>
                         <button class="btn btn-primary btn-sm btn-scroll section__header-btn mt-4 mt-sm-0" data-target="commentForm">Оставить отзыв</button>
                     </div>
-                    <div class="comments comments-page-list" id="comments">
+                    <div class="comments comments-page-list 111" id="comments">
                         <?php comments_template('/comments2.php'); ?>
                     </div>
                     <!-- pagination -->
@@ -704,7 +704,7 @@ if($ID != ''  && $DISPLAY == 'comments'): ?>
                         <h1 class="h1 title mb-0">Отзывы о кредите "<?php echo get_the_title($ID) ?>"</h1>
                         <button class="btn btn-primary btn-sm btn-scroll section__header-btn mt-4 mt-sm-0" data-target="commentForm">Оставить отзыв</button>
                     </div>
-                    <div class="comments comments-page-list" id="comments">
+                    <div class="comments comments-page-list 222" id="comments">
                         <?php comments_template('/comments2.php'); ?>
                     </div>
                     <!-- pagination -->
@@ -829,7 +829,7 @@ if($ID != ''  && $DISPLAY == 'comments'): ?>
                         <h1 class="title mb-0">Отзывы о банке "<?php echo get_the_title($ID) ?>"</h1>
                         <button class="btn btn-primary btn-sm btn-scroll section__header-btn mt-4 mt-sm-0" data-target="commentForm">Оставить отзыв</button>
                     </div>
-                    <div class="comments comments-page-list" id="comments">
+                    <div class="comments comments-page-list 3333" id="comments">
                         <?php comments_template('/comments2.php'); ?>
                     </div>
                     <!-- pagination -->
@@ -965,7 +965,7 @@ if($ID != ''  && $DISPLAY == 'comments'): ?>
                         <h1 class="h1 title mb-0">Отзывы о кредите "<?php echo get_the_title($ID) ?>"</h1>
                         <button class="btn btn-primary btn-sm btn-scroll section__header-btn mt-4 mt-sm-0" data-target="commentForm">Оставить отзыв</button>
                     </div>
-                    <div class="comments comments-page-list" id="comments">
+                    <div class="comments comments-page-list 444" id="comments">
                         <?php comments_template('/comments2.php'); ?>
                     </div>
                     <!-- pagination -->
@@ -1067,6 +1067,10 @@ if($ID != ''  && $DISPLAY == 'comments'): ?>
 
                             get_template_part( 'all_template/the_best_offers_list', null, $args); ?>
 
+                            <?php
+                            wp_reset_query();
+                            ?>
+
                         </div>
                     </div>
                 </div>
@@ -1089,22 +1093,107 @@ if($ID != ''  && $DISPLAY == 'comments'): ?>
                         <h1 class="title mb-0">Отзывы о займе "<?php echo get_the_title($ID) ?>"</h1>
                         <button class="btn btn-primary btn-sm btn-scroll section__header-btn mt-4 mt-sm-0" data-target="commentForm">Оставить отзыв</button>
                     </div>
-                    <div class="comments comments-page-list" id="comments">
+                    <div class="comments comments-page-list 5555" id="comments">
+
+
                         <?php comments_template('/comments2.php'); ?>
                     </div>
+
+
+
+
+                    <?
+
+
+
+
+
+                    $current_page_comments = ( get_query_var( 'comments' ) ) ? get_query_var( 'comments' ) : 1;
+                    $current_page_comments =  str_replace('page/', '', $current_page_comments);
+
+
+                    $comments_per_page = 10;
+
+                    $current_page = $current_page_comments;
+                    $offset =  (--$current_page) * $comments_per_page;
+
+                    //MYSQL: LIMIT offset, number
+                    $params = array(
+                        'post_id' => $post->ID,
+                        'offset' => $offset,
+                        'status' => 'approve',
+                        'number' => $comments_per_page,
+                    );
+
+                    $comments = get_comments( $params );
+                    $total_comments = get_comments(
+                        array_merge($params,
+                            array(
+                                'count' => true,
+                                'offset' => 0,
+                                'number' => 0
+                            )
+                        )
+                    );
+
+
+                    $max_page = ceil( $total_comments / $comments_per_page );
+
+                    $pagination = paginate_links( [
+                        "base"      => str_replace(999999999, "%#%", get_pagenum_link(999999999)),
+                        'current' => $current_page_comments,
+                        'total'   => $max_page,
+                        "format"    => "",
+                        "type"      => "plain",
+                        "prev_text" => 'Назад',
+                        "next_text" => 'Вперед',
+                    ] );
+
+                    // ВОТ ТУТ УБИРАЕМ ссылку на 1 страницу, т.к серавно будет редирект
+                    $pagination = preg_replace( '~page/1/?([\'"])~', '\1', $pagination );
+
+
+                    $pagination = str_replace("page-numbers", "pagination__links-item", $pagination);
+                    $pagination = str_replace("prev", "pagination__links-first", $pagination);
+
+
+
+
+
+                    ?>
+
+
+
+
                     <!-- pagination -->
-                    <div class="pagination flex-column">
+
+                    <div class="pagination flex-column mb-5 mb-md-0 ">
+
                         <div class="pagination__container d-sm-flex justify-content-between align-items-center">
+                            <div class="pagination__links">
+                                <?php  echo $pagination = str_replace("next", "pagination__links-last", $pagination); ?>
+
+                                <?php //my_pagination(); ?>
+                            </div>
+
+                            <?php // Возвращаем оригинальные данные поста. Сбрасываем $post.
+                            wp_reset_query(); ?>
                             <div class="pagination__description mt-4 mt-sm-0">
-                                Показано <span class="review-count"> отзывов</span> из <?php echo get_comments_number($ID) ?>
+                                Показано <span class="count_view"><?php echo $comments_per_page; ?></span>
+                                продуктов из <span class="count_all"><?php echo $total_comments; ?></span>
                             </div>
                         </div>
                     </div>
                     <!-- / pagination -->
+
+
+
+
+
                 </div>
                 <div class="section">
                     <!-- form -->
-                    <div class="form" id="commentForm">
+                    <div class="form 2223" id="commentForm">
                         <?php
                         // получим данные из куков
                         $commenter = wp_get_current_commenter();

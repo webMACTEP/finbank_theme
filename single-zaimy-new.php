@@ -9,9 +9,15 @@ get_header(); ?>
 $queried_object = get_queried_object();
 $ID = get_queried_object()->ID;
 $tags = get_the_tags($ID);
-?>
 
-<?php $apply_now = get_field('apply_now_select_products', $ID); ?>
+$credit_link =  get_term_link(2, '');
+$debet_link = get_term_link(7, '');
+$installment_link = get_term_link(8, '');
+//$creditprod_link =  get_term_link('kredity', '');
+$creditprod_link =  '/kredity/';
+$zaim_link =  '/zaimy/';
+
+ $apply_now = get_field('apply_now_select_products', $ID); ?>
 <?php // get_template_part('all_template/popap_apply_now', null, ['DATA' => $apply_now]); 
 ?>
 
@@ -1523,7 +1529,7 @@ $tags = get_the_tags($ID);
         
 
         <!-- best offers -->
-        <div class="container" id="bestoffers">
+        <div class="container" id="best-offers">
             <div class="section main-page-offers">
                 <div class="section__header mb-3 d-flex justify-content-between align-items-end align-items-md-center">
                     <h2 class="title mb-0">Лучшие предложения</h2>

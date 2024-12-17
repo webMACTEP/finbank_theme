@@ -23,11 +23,22 @@ if ( post_password_required() ) {
 
 <?php
 
+
+			$current_page_comments = ( get_query_var( 'comments' ) ) ? get_query_var( 'comments' ) : 1;
+			$current_page_comments =  str_replace('page/', '', $current_page_comments);
+
+			$per_page = 10;
+			$offset = ($current_page_comments - 1) * $per_page;
+
+
 			$post_args = get_comments(array(
-				//'post_id' => $_SESSION['post_review_id'],
                 'post_id' => $post->ID,
 				'status' => 'approve',
+				'paged' => $current_page_comments,
 			));
+
+
+
 			wp_list_comments(
 				array(
 					'style'      => 'div',
@@ -35,7 +46,10 @@ if ( post_password_required() ) {
 					'callback' => 'myown_comment',
 					'status' => 'approve',
 					'hierarchical' => 'threaded',
-					'number' => -1,
+					//'number' => 3,
+					'per_page' => $per_page,
+					'page' => $current_page_comments,
+
 				), $post_args);
 			?>
 

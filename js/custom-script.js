@@ -88,10 +88,10 @@ jQuery(function($){
 
 
 	// добавляем правило для валидации телефона
-	jQuery.validator.addMethod("checkMaskPhone", function(value, element) {
-		//	return /\+\d{1}\(\d{3}\)\d{3}-\d{4}/g.test(value);
-		return /\+\d{1}\(\d{3}\)\d{3}-\d{2}-\d{2}/g.test(value);
-	});
+	// jQuery.validator.addMethod("checkMaskPhone", function(value, element) {
+	// 	//	return /\+\d{1}\(\d{3}\)\d{3}-\d{4}/g.test(value);
+	// 	return /\+\d{1}\(\d{3}\)\d{3}-\d{2}-\d{2}/g.test(value);
+	// });
 
 	$(".validate-footer").validate({
 		rules: {

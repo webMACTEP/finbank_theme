@@ -1,6 +1,12 @@
 <?php get_header() ?>
 
-<?php 
+<?php
+
+
+//global $wp_query;
+//wp_reset_postdata();
+//wp_reset_query();
+//print_r2($wp_query);
 
 $ID = $_SESSION['post_review_id'];
 $TAX = $_SESSION['data_tax_reviews'];
@@ -314,8 +320,7 @@ $sql = "SELECT comment_ID, comment_date, comment_content, comment_post_ID
  ORDER by comment_date DESC LIMIT $ppp OFFSET $custom_offset";
 
 $comments_list = $wpdb->get_results( $sql );
-
-get_template_part('all_template/reviews_list', null, ['TYPE' => 'kredity', 'DATA' => $comments_list, 'bank_id__field_name' => 'product_bank']); ?>
+//get_template_part('all_template/reviews_list', null, ['TYPE' => 'kredity', 'DATA' => $comments_list, 'bank_id__field_name' => 'product_bank']); ?>
 
 
 
@@ -1555,10 +1560,27 @@ wp_reset_postdata();
     <div class="container">
         <div class="section">
             <div class="row reviews-page-list" id="reviews">
-<?php 
+<?php
 
-$ppp = 10000000; // either use the WordPress global Posts per page setting or set a custom one like $ppp = 10;
-$custom_offset = 0;
+
+
+$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+$post_per_page = 15;
+$offset = ($paged - 1)*$post_per_page;
+
+
+$args = array(
+    'posts_per_page' => 15,
+    'paged' => $paged
+);
+
+$custom_query = new WP_Query( $args );
+
+//print_r2($custom_query);
+
+
+//wp_reset_postdata();
+
 
 // fetch posts in all those categories
 $posts = get_cpt_ids('banks');
@@ -1566,10 +1588,25 @@ $posts2 = get_cpt_ids('bankcard');
 $posts3 = get_cpt_ids('kredity');
 $posts_merge =  array_merge($posts, $posts2, $posts3);
 
+//$sql = "SELECT SQL_CALC_FOUND_ROWS, comment_ID, comment_date, comment_content, comment_post_ID
+// FROM {$wpdb->comments} WHERE
+// comment_post_ID in (".implode(',', $posts_merge).") AND comment_approved = 1 AND comment_parent = 0
+// ORDER by comment_date DESC LIMIT $offset, $post_per_page ";
+
 $sql = "SELECT comment_ID, comment_date, comment_content, comment_post_ID
  FROM {$wpdb->comments} WHERE
  comment_post_ID in (".implode(',', $posts_merge).") AND comment_approved = 1 AND comment_parent = 0
- ORDER by comment_date DESC LIMIT $ppp OFFSET $custom_offset";
+ ORDER by comment_date DESC LIMIT $offset, $post_per_page ";
+
+$sql_posts_total = $wpdb->get_var( "SELECT  COUNT(*) FROM {$wpdb->comments} WHERE
+ comment_post_ID in (".implode(',', $posts_merge).") AND comment_approved = 1 AND comment_parent = 0
+ ORDER by comment_date DESC LIMIT 0, 15");
+
+
+
+
+$max_num_pages = ceil($sql_posts_total / $post_per_page);
+$_SESSION['glob_max_num_pages'] = $custom_query->max_num_pages;
 
 $comments_list = $wpdb->get_results( $sql );
 
@@ -1675,16 +1712,48 @@ if ( count( $comments_list ) > 0 ) {
         </div>
         <!-- / item -->
     <?php endif; ?>
+
+
+
+
+
 <?php } 
 }else{ ?>
 <p class="col-12">Пока нет отзывов.</p>
 <?php } ?>
             </div>
+
+
+            <?php
+
+            //the_comments_pagination(array(
+            //    'screen_reader_text' => __( 'Comments navigation' ),
+            //    // из функции paginate_comments_links():
+            //    'base'    => add_query_arg( 'page', '%#%' ),
+            //    'format'  => '',
+            //    'total'   => $max_num_pages,
+            //    'current' => $paged,
+            //    'echo'    => true,
+            //    'add_fragment' => '#comments'
+            //));
+
+
+            ?>
+
             <!-- pagination -->
-            <div class="pagination flex-column">
+
+            <div class="pagination flex-column mb-5 mb-md-0">
+
                 <div class="pagination__container d-sm-flex justify-content-between align-items-center">
-                    <div class="pagination__description mt-4 mt-sm-0">
-                        Показано <span class="review-tax-count"></span> отзывов из <span class="review-tax-count-all"></span>
+                    <div class="pagination__links">
+                        <?php my_pagination($custom_query->max_num_pages); ?>
+                    </div>
+
+                    <?php // Возвращаем оригинальные данные поста. Сбрасываем $post.
+                    //wp_reset_query(); ?>
+                    <div class="pagination__description mt-4 mt-sm-0 d-none">
+                        Показано <span class="count_view"><?php echo $post_per_page; ?></span>
+                        продуктов из <span class="count_all"><?php echo $max_num_pages;?></span>
                     </div>
                 </div>
             </div>
@@ -1692,6 +1761,14 @@ if ( count( $comments_list ) > 0 ) {
         </div>
     </div>
 </main>
+
+<?php
+    //wp_reset_postdata();
+
+    ?>
 <?php endif; ?>
+
+
+
 
 <?php get_footer() ?>

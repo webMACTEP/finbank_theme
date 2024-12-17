@@ -34,11 +34,25 @@ if ( isset($args['bank_id__field_name']) && !empty($args['bank_id__field_name'])
             // Получение автора комментария и города из метаданных
             $author = get_comment_author( $comment_id );
             $city = get_comment_meta( $comment_id, 'city', true );
-        ?>
+
+
+        $user = get_userdata( $comment->user_id );
+        $user_email = '';
+        $user_role = '';
+        if (!empty($user)) {
+            $user_email = $user->user_email;
+            $user_role = $user->roles;
+        }
+        $author = get_comment_author( $comment_id );
+        $city = get_comment_meta( $comment_id, 'city', true );
+    ?>
+
+
 
         <?php if( isset($args['TYPE']) && $args['TYPE'] === 'zaimy' ): ?>
             <!-- Отзывы типа "zaimy" -->
             <div class="reviews__item">
+
                 <div class="reviews__item-body">
                     <div class="reviews__header d-flex align-items-center mb-2">
                         <div class="reviews__header-logo">
@@ -118,9 +132,11 @@ if ( isset($args['bank_id__field_name']) && !empty($args['bank_id__field_name'])
             <!-- / item -->
         <?php endif; ?>
 
+
         <?php if( isset($args['TYPE']) && $args['TYPE'] !== 'zaimy' ): ?>
             <!-- Отзывы других типов -->
             <div class="reviews__item">
+
                 <div class="reviews__item-body">
                     <div class="reviews__header d-flex align-items-center mb-2">
                         <div class="reviews__header-logo">

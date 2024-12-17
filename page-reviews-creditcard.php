@@ -66,8 +66,10 @@ $news_id = "14";
             <div class="row reviews-page-list 123" id="reviews">
                 <?php
 
-                $ppp = 10000; // either use the WordPress global Posts per page setting or set a custom one like $ppp = 10;
-                $custom_offset = 0;
+                $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+                $ppp = 15; // either use the WordPress global Posts per page setting or set a custom one like $ppp = 10;
+                $custom_offset = ($paged - 1)*$ppp;
+
 
                 // fetch posts in all those categories
                 $posts = get_objects_in_term( $tax_id, 'bankcards' );
@@ -77,6 +79,13 @@ $news_id = "14";
                  comment_post_ID in (".implode(',', $posts).") AND comment_approved = 1
                  ORDER by comment_date DESC LIMIT $ppp OFFSET $custom_offset";
 
+                $sql_posts_total = $wpdb->get_var( "SELECT  COUNT(*)  FROM {$wpdb->comments} WHERE
+                 comment_post_ID in (".implode(',', $posts).") AND comment_approved = 1
+                 ORDER by comment_date DESC LIMIT 0, 15");
+                $max_num_pages = ceil($sql_posts_total / $ppp);
+                $wp_query->max_num_pages = $max_num_pages;
+
+
                 $comments_list = $wpdb->get_results( $sql );
 
 
@@ -84,10 +93,19 @@ $news_id = "14";
 
             </div>
             <!-- pagination -->
-            <div class="pagination flex-column">
+
+            <div class="pagination flex-column mb-5 mb-md-0">
+
                 <div class="pagination__container d-sm-flex justify-content-between align-items-center">
-                    <div class="pagination__description mt-4 mt-sm-0">
-                        Показано <span class="review-tax-count"></span> отзывов из <span class="review-tax-count-all"></span>
+                    <div class="pagination__links">
+                        <?php my_pagination(); ?>
+                    </div>
+
+                    <?php // Возвращаем оригинальные данные поста. Сбрасываем $post.
+                    wp_reset_query(); ?>
+                    <div class="pagination__description mt-4 mt-sm-0 d-none">
+                        Показано <span class="count_view"><?php echo $post_per_page; ?></span>
+                        продуктов из <span class="count_all"><?php echo $max_num_pages;?></span>
                     </div>
                 </div>
             </div>
@@ -1291,7 +1309,7 @@ wp_reset_postdata();
 
 <!-- Все отзывы при пустых кукис -->
 
-<?php if($TAX =='' && $ID == ''): ?>
+<?php if($TAX =='' && $ID == '' && false): ?>
 <main>
     <div class="container">
         <nav aria-label="breadcrumb" class="horizontal__scroll">

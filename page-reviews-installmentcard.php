@@ -2,6 +2,8 @@
 
 <?php
 
+global $wp_query;
+
 $ID = $_SESSION['post_review_id'];
 $TAX = $_SESSION['data_tax_reviews'];
 $DISPLAY = $_SESSION['display_type'];
@@ -66,10 +68,19 @@ $news_id = "15";
     <div class="container">
         <div class="section">
             <div class="row reviews-page-list" id="reviews">
-                <?php
+
+<?php
+
+//$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+//$ppp = 15; // either use the WordPress global Posts per page setting or set a custom one like $ppp = 10;
+//$custom_offset = ($paged - 1)*$ppp;
+
+
+
 
                 $ppp = 10000; // either use the WordPress global Posts per page setting or set a custom one like $ppp = 10;
                 $custom_offset = 0;
+
 
                 // fetch posts in all those categories
                 $posts = get_objects_in_term($tax_id, 'bankcards');
@@ -79,16 +90,34 @@ $news_id = "15";
  comment_post_ID in (" . implode(',', $posts) . ") AND comment_approved = 1
  ORDER by comment_date DESC LIMIT $ppp OFFSET $custom_offset";
 
-                $comments_list = $wpdb->get_results($sql);
+
+//                HEAD
+$sql_posts_total = $wpdb->get_var( "SELECT  COUNT(*)  FROM {$wpdb->comments} WHERE
+                 comment_post_ID in (".implode(',', $posts).") AND comment_approved = 1
+                 ORDER by comment_date DESC LIMIT 0, 15");
+$max_num_pages = ceil($sql_posts_total / $ppp);
+$wp_query->max_num_pages = $max_num_pages;
+
+$comments_list = $wpdb->get_results( $sql );
+
 
                 get_template_part('all_template/reviews_list', null, ['TYPE' => 'bankcards', 'DATA' => $comments_list, 'bank_id__field_name' => 'bank_choise']); ?>
 
             </div>
             <!-- pagination -->
-            <div class="pagination flex-column">
+
+            <div class="pagination flex-column mb-5 mb-md-0">
+
                 <div class="pagination__container d-sm-flex justify-content-between align-items-center">
-                    <div class="pagination__description mt-4 mt-sm-0">
-                        Показано <span class="review-tax-count"></span> отзывов из <span class="review-tax-count-all"></span>
+                    <div class="pagination__links">
+                        <?php my_pagination(); ?>
+                    </div>
+
+                    <?php // Возвращаем оригинальные данные поста. Сбрасываем $post.
+                    wp_reset_query(); ?>
+                    <div class="pagination__description mt-4 mt-sm-0 d-none">
+                        Показано <span class="count_view"><?php echo $post_per_page; ?></span>
+                        продуктов из <span class="count_all"><?php echo $max_num_pages;?></span>
                     </div>
                 </div>
             </div>

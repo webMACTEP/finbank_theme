@@ -58,6 +58,10 @@ unset($_SESSION['filter_credit_card']);
 
 	$allposts = array_merge($postsarray, $products);
 
+
+
+
+
 	$allpostsjson = json_encode($allposts); 
 	
 	global $allposts_collection;
