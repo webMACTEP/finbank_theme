@@ -145,6 +145,7 @@
         margin-top: -70px; /* Отрицательный отступ равный высоте хедера */
     }
     .rating-footer {
+       
         h3 {
             margin-bottom: 0;
         }
@@ -363,6 +364,9 @@
     }
 
     .rating-footer {
+        .star {
+            font-size: 33px;
+        }
         .average-rating {
             display: block !important;
             text-align: center;
@@ -374,13 +378,6 @@
         justify-content: center;
     }
 
-    .rating-footer .star {
-        font-size: 24px;
-        color: #ccc;
-        cursor: pointer;
-        transition: color 0.2s;
-        margin-right: 5px;
-    }
 
     .rating-footer .star.filled {
         color: #f39c12;
@@ -418,6 +415,15 @@
     // .client-rating .star:hover ~ .star {
     //     color: #f39c12;
     // }
+
+    .rating-footer .star {
+        font-size: 32px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.2s;
+        margin-right: 5px;
+    }
+
 
     .rating-rows {
         .star-rating {
@@ -782,8 +788,8 @@
 }
 
 @media (max-width: 768px) {
-    .zaimy-new .reviews{
-flex-direction: column;
+    .zaimy-new .reviews {
+        flex-direction: column;
     }
     .zaimy-new .content-promo .items .right {
         margin: 0px auto;
