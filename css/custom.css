@@ -6215,9 +6215,26 @@ a.cld-like-dislike-trigger {
     padding: 1rem 0px;
   }
   .zaimy-new .how__row,
-  .zaimy-new .tariffs-rows .head,
-  .zaimy-new .tariffs-cards {
+  .zaimy-new .tariffs-rows .head {
     flex-direction: column;
+  }
+  .zaimy-new .reviews,
+  .zaimy-new .tariffs-rows,
+  .zaimy-new .tariffs-cards {
+    margin: 0px -14px;
+    flex-direction: row;
+    padding: 0px 14px 6px 14px;
+    overflow-x: auto;
+    position: relative;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .zaimy-new .reviews .comment__one,
+  .zaimy-new .tariffs-cards .item {
+    min-width: 280px;
+  }
+  .form-comment__bottom {
+    margin-left: 14px;
   }
   .zaimy-new .plus-minus__row {
     flex-direction: column;
@@ -6241,5 +6258,8 @@ a.cld-like-dislike-trigger {
   .tariffs__list {
     margin: 0px 0px 0px 0px;
     border-radius: 12px;
+  }
+  .main-page-offers {
+    min-height: auto;
   }
 }/*# sourceMappingURL=custom.css.map */
