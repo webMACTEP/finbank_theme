@@ -13,6 +13,14 @@
 // var(--range-value-border)
 // test
 .zaimy-new {
+    .article__news-item{
+        &:last-child{
+            border-bottom: none;
+        }
+    }
+    .form-comment__bottom{
+        margin-left: 14px;
+    }
     .reviews {
         .comment__one-content {
             display: -webkit-box; /* Используется для реализации ограничения строк */
@@ -106,6 +114,7 @@
     .dislike-button .dislike-count {
         margin-left: 5px;
         font-weight: bold;
+        color: var(--gray-600);
     }
 
     .like-button:hover:not(.disabled) {
@@ -796,6 +805,56 @@
 }
 
 @media (max-width: 768px) {
+    .wm-fixed-button{
+        .btn{
+            padding: .45rem 2.25rem;
+        }
+        position: fixed;
+        left: 50%;
+        bottom: 21px;
+        width: fit-content;
+       
+        transform: translateX(-50%);
+        margin-bottom: 0 !important;
+    }
+    .zaimy-new .tariffs__list .item a{
+        svg{
+            min-width: 21px;
+        }
+    }
+    .zaimy-new .content-contacts__wrapper .item{
+        flex-direction: column;
+        gap: 6px;
+        align-items: start;
+    }
+    .tariffs__list-description,
+    .tariffs__list-title{
+        max-width: 100%;
+    }
+    .zaimy-new .tariffs__list-item{
+        .row{
+            flex-direction: column;
+            gap: 6px;
+        }
+    }
+    .zaimy-new .content-contacts__wrapper .item .title{
+       // min-width: 30%;
+    }
+    .zaimy-new .rating-rows .rating-item{
+        gap: 6px;
+    }
+    .zaimy-new .client-rating .star{
+        font-size: 18px;
+    }
+    .zaimy-new .how__row{
+        padding: 0px 0px 1rem 0px;
+        a{
+            order: 2;
+        }
+        h3{
+            order: 1;margin-bottom: 0;
+        }
+    }
     .zaimy-new .sticky-top-withnav {
         margin-bottom: 0 !important;
     }
@@ -893,9 +952,7 @@
         gap: 20px;
         align-items: flex-start;
     }
-    .zaimy-new .how__row {
-        padding: 1rem 0px;
-    }
+   
     .zaimy-new .how__row,
     .zaimy-new .tariffs-rows .head {
         flex-direction: column;
@@ -916,9 +973,7 @@
     .zaimy-new .tariffs-cards .item{
         min-width: 280px;
     }
-    .form-comment__bottom{
-        margin-left: 14px;
-    }
+    
     .zaimy-new .plus-minus__row {
         &:first-child {
             border-top: none;

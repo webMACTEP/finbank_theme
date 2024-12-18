@@ -5415,6 +5415,12 @@ a.cld-like-dislike-trigger {
   color: #fff;
 }
 
+.zaimy-new .article__news-item:last-child {
+  border-bottom: none;
+}
+.zaimy-new .form-comment__bottom {
+  margin-left: 14px;
+}
 .zaimy-new .reviews {
   display: flex;
   justify-content: space-between;
@@ -5499,6 +5505,7 @@ a.cld-like-dislike-trigger {
 .zaimy-new .dislike-button .dislike-count {
   margin-left: 5px;
   font-weight: bold;
+  color: var(--gray-600);
 }
 .zaimy-new .like-button:hover:not(.disabled) {
   color: green;
@@ -6123,6 +6130,50 @@ a.cld-like-dislike-trigger {
 }
 
 @media (max-width: 768px) {
+  .wm-fixed-button {
+    position: fixed;
+    left: 50%;
+    bottom: 21px;
+    width: -moz-fit-content;
+    width: fit-content;
+    transform: translateX(-50%);
+    margin-bottom: 0 !important;
+  }
+  .wm-fixed-button .btn {
+    padding: 0.45rem 2.25rem;
+  }
+  .zaimy-new .tariffs__list .item a svg {
+    min-width: 21px;
+  }
+  .zaimy-new .content-contacts__wrapper .item {
+    flex-direction: column;
+    gap: 6px;
+    align-items: start;
+  }
+  .tariffs__list-description,
+  .tariffs__list-title {
+    max-width: 100%;
+  }
+  .zaimy-new .tariffs__list-item .row {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .zaimy-new .rating-rows .rating-item {
+    gap: 6px;
+  }
+  .zaimy-new .client-rating .star {
+    font-size: 18px;
+  }
+  .zaimy-new .how__row {
+    padding: 0px 0px 1rem 0px;
+  }
+  .zaimy-new .how__row a {
+    order: 2;
+  }
+  .zaimy-new .how__row h3 {
+    order: 1;
+    margin-bottom: 0;
+  }
   .zaimy-new .sticky-top-withnav {
     margin-bottom: 0 !important;
   }
@@ -6211,9 +6262,6 @@ a.cld-like-dislike-trigger {
   .zaimy-new .content-contacts .cc-row .btn {
     margin: 0px auto;
   }
-  .zaimy-new .how__row {
-    padding: 1rem 0px;
-  }
   .zaimy-new .how__row,
   .zaimy-new .tariffs-rows .head {
     flex-direction: column;
@@ -6232,9 +6280,6 @@ a.cld-like-dislike-trigger {
   .zaimy-new .reviews .comment__one,
   .zaimy-new .tariffs-cards .item {
     min-width: 280px;
-  }
-  .form-comment__bottom {
-    margin-left: 14px;
   }
   .zaimy-new .plus-minus__row {
     flex-direction: column;

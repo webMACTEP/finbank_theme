@@ -312,8 +312,7 @@ $zaim_link =  '/zaimy/';
                                             </div>
                                         <?php endif; ?>
 
-                                        <!--/div>
-                                       <div class="col-6"-->
+                                       
                                         <div class="sidebar__field mb-3">
                                             <div class="sidebar__field-title">Официальный сайт</div>
                                             <div class="sidebar__field-content">
@@ -364,7 +363,7 @@ $zaim_link =  '/zaimy/';
                                         <? endif; ?>
 
 
-                                        <div class="sidebar__field mb-3">
+                                        <div class="wm-fixed-button sidebar__field mb-3">
                                             <?php //if(get_field('card_bank_link', $ID)):
                                             ?>
                                             <?php if (reclink($ID)): ?>
