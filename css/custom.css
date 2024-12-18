@@ -5415,6 +5415,13 @@ a.cld-like-dislike-trigger {
   color: #fff;
 }
 
+.zaimy-new .leaders__item:before {
+  border-bottom: none;
+}
+.zaimy-new .credits__view-mob-description {
+  display: none;
+  color: var(--gray-700);
+}
 .zaimy-new .article__news-item:last-child {
   border-bottom: none;
 }
@@ -6130,17 +6137,32 @@ a.cld-like-dislike-trigger {
 }
 
 @media (max-width: 768px) {
-  .wm-fixed-button {
+  .btn-up,
+  .present-icon {
+    width: 44px;
+    height: 44px;
+  }
+  .zaimy-new .credits__view-mob-description {
+    display: block;
+  }
+  .zaimy-new .credits__view-bank {
+    display: none;
+  }
+  .zaimy-new .wm-fixed-button {
     position: fixed;
     left: 50%;
-    bottom: 21px;
+    bottom: 16px;
     width: -moz-fit-content;
     width: fit-content;
     transform: translateX(-50%);
     margin-bottom: 0 !important;
   }
-  .wm-fixed-button .btn {
-    padding: 0.45rem 2.25rem;
+  .zaimy-new .wm-fixed-button .btn {
+    height: 44px;
+    padding: 0rem 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .zaimy-new .tariffs__list .item a svg {
     min-width: 21px;
@@ -6232,9 +6254,6 @@ a.cld-like-dislike-trigger {
   }
   .zaimy-new .section {
     margin-bottom: 24px;
-  }
-  .zaimy-new .sidebar.order-md-2 {
-    order: 2;
   }
   .zaimy-new .sticky-top-withnav {
     display: flex;
