@@ -338,7 +338,7 @@ if ( $query->have_posts() ) {
         $query->the_post();
         array_push($ids, get_the_id() );
     }
-} 
+}
 
 wp_reset_postdata();
 return $ids;
@@ -351,7 +351,7 @@ function get_cpt2_ids( $id, $post_type ){
 	$args = array(
     'post_type'      => $post_type,
     'post_status'    => 'publish',
-    'posts_per_page' => - 1,   
+    'posts_per_page' => - 1,
 );
 $args['meta_query'] = array('relation' => 'OR');
 $args['meta_query'][] = array(
@@ -373,7 +373,7 @@ if ( $query->have_posts() ) {
         $query->the_post();
         array_push($ids, get_the_id() );
     }
-} 
+}
 
 wp_reset_postdata();
 return $ids;
@@ -381,14 +381,14 @@ return $ids;
 
 
 // Массив id кастомного типа записей
-function get_poducts_ids( $id, $tax, $term_ids){ 
+function get_poducts_ids( $id, $tax, $term_ids){
 $args = array(
-    'post_type'             => array('bankcard', 'kredity'), 
+    'post_type'             => array('bankcard', 'kredity'),
     'posts_per_page'        => -1,
     'meta_key' => 'ratings_average',
     'orderby' => 'meta_value_num',
-    'order' => 'DESC', 
-    'post_status' => 'publish', 
+    'order' => 'DESC',
+    'post_status' => 'publish',
     'tax_query' => array(
         array(
             'taxonomy' => $tax,
@@ -415,7 +415,7 @@ if ( $query->have_posts() ) {
         $query->the_post();
         array_push($ids, get_the_id() );
     }
-} 
+}
 
 wp_reset_postdata();
 return $ids;
@@ -486,7 +486,7 @@ function kama_postviews( $args = [] ){
 
 // Регистрация типов записей
 add_action( 'init', 'true_register_post_type_init' ); // Использовать функцию только внутри хука init
- 
+
 function true_register_post_type_init() {
 
 /*Банки*/
@@ -508,14 +508,14 @@ function true_register_post_type_init() {
 		'labels' => $labels5,
 		'public' => true,
 		'show_ui' => true, // показывать интерфейс в админке
-		'has_archive' => true, 
+		'has_archive' => true,
 		'menu_icon' => 'dashicons-screenoptions', // иконка в меню
 		'menu_position' => 20, // порядок в меню
 		'show_tagcloud' => true,
 		'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail', 'page-attributes'),
 		//'taxonomies' => array(  )
-	);	
-	register_post_type('banks', $args5);	
+	);
+	register_post_type('banks', $args5);
 
 
 	$labels = array(
@@ -536,14 +536,14 @@ function true_register_post_type_init() {
 		'labels' => $labels,
 		'public' => true,
 		'show_ui' => true, // показывать интерфейс в админке
-		'has_archive' => true, 
+		'has_archive' => true,
 		'menu_icon' => 'dashicons-star-empty', // иконка в меню
 		'menu_position' => 21, // порядок в меню
 		'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail'),
 		'taxonomies' => array( 'post_tag' )
 	);
 	register_post_type('zaimy', $args);
-	
+
 	$labels2 = array(
 		'name' => 'Кредиты',
 		'singular_name' => 'Кредиты', // админ панель Добавить->Функцию
@@ -562,12 +562,12 @@ function true_register_post_type_init() {
 		'labels' => $labels2,
 		'public' => true,
 		'show_ui' => true, // показывать интерфейс в админке
-		'has_archive' => true, 
+		'has_archive' => true,
 		'menu_icon' => 'dashicons-star-empty', // иконка в меню
 		'menu_position' => 22, // порядок в меню
 		'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail'),
 		'taxonomies' => array( 'post_tag' )
-	);	
+	);
 	register_post_type('kredity', $args2);
 
 
@@ -597,10 +597,10 @@ register_taxonomy('bankcards', array('bankcard'), array(
 		'show_in_rest'          => null, // добавить в REST API
 		'rest_base'             => null, // $taxonomy
 		'hierarchical'          => true,
-		
+
 		//'update_count_callback' => '_update_post_term_count',
 		//'rewrite'               => true,
-		'rewrite'               => array('slug'=>'bankcard', 'hierarchical'=>false, 'with_front'=>false, 'feed'=>false, 'pages'=>false),		
+		'rewrite'               => array('slug'=>'bankcard', 'hierarchical'=>false, 'with_front'=>false, 'feed'=>false, 'pages'=>false),
 		//'query_var'             => true, // название параметра запроса
 		'capabilities'          => array(),
 		'meta_box_cb'           => null, // callback функция. Отвечает за html код метабокса (с версии 3.8): post_categories_meta_box или post_tags_meta_box. Если указать false, то метабокс будет отключен вообще
@@ -608,7 +608,7 @@ register_taxonomy('bankcards', array('bankcard'), array(
 		'_builtin'              => false,
 		'show_in_quick_edit'    => null, // по умолчанию значение show_ui
 	) );
-	
+
 	$labels3 = array(
 		'name' => 'Банковские карты',
 		'singular_name' => 'Банковские карты', // админ панель Добавить->Функцию
@@ -627,7 +627,7 @@ register_taxonomy('bankcards', array('bankcard'), array(
 		'labels' => $labels3,
 		'public' => true,
 		'show_ui' => true, // показывать интерфейс в админке
-		'has_archive' => true, 
+		'has_archive' => true,
 		'menu_icon' => 'dashicons-star-empty', // иконка в меню
 		'menu_position' => 23, // порядок в меню
 		'hierarchical'        => false,
@@ -639,8 +639,8 @@ register_taxonomy('bankcards', array('bankcard'), array(
 		//'query_var' => true,
 		'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail')
 
-	);	
-	register_post_type('bankcard', $args3);	
+	);
+	register_post_type('bankcard', $args3);
 
 
 /*Авторы*/
@@ -662,14 +662,14 @@ register_taxonomy('bankcards', array('bankcard'), array(
 		'labels' => $labels4,
 		'public' => true,
 		'show_ui' => true, // показывать интерфейс в админке
-		'has_archive' => true, 
+		'has_archive' => true,
 		'menu_icon' => 'dashicons-universal-access', // иконка в меню
 		'menu_position' => 24, // порядок в меню
 		'show_tagcloud' => true,
 		'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail'),
 		//'taxonomies' => array(  )
-	);	
-	register_post_type('team', $args4);	
+	);
+	register_post_type('team', $args4);
 
     /* Подборки */
 	$labels6 = array(
@@ -696,7 +696,7 @@ register_taxonomy('bankcards', array('bankcard'), array(
 		'show_tagcloud' => true,
 		'supports' => array( 'title', 'editor', 'comments', 'author', 'thumbnail'),
 		//'taxonomies'  => array( 'category' )
-	);	
+	);
 	register_post_type('collection', $args6);
 
      /* Формы заявок */
@@ -763,7 +763,7 @@ add_action( 'init', 'tags_category_taxonomy' );
 
 
 	add_filter('post_type_link', 'bankcard_permalink', 1, 2);
-	
+
 	function bankcard_permalink( $permalink, $post ){
 		// выходим если это не наш тип записи: без холдера %products%
 		if( strpos($permalink, '%bankcards%') === false )
@@ -805,11 +805,11 @@ add_filter( 'wp_postratings_image_extension', 'custom_rating_image_extension' );
 
 
 function remove_page_from_query_string($query_string)
-{ 
+{
     if (!empty($query_string['name']) && $query_string['name'] == 'page' && isset($query_string['page'])) {
         unset($query_string['name']);
         $query_string['paged'] = $query_string['page'];
-    }      
+    }
     return $query_string;
 }
 add_filter('request', 'remove_page_from_query_string');
@@ -859,38 +859,48 @@ function fix_svg_mime_type( $data, $file, $filename, $mimes, $real_mime = '' ){
 }
 
 
-function my_pagination()
+
+function my_pagination($total = '', $currentPage = '')
 {
+
+
     global $wp_query;
 
-      //$GLOBALS['wp_query']->max_num_pages = $query->max_num_pages;
+    if($currentPage == ''){
+        if (is_front_page()) {
+            $currentPage = (get_query_var("page")) ? get_query_var("page") : 1;
+        } else {
+            $currentPage = (get_query_var("paged")) ? get_query_var("paged") : 1;
+        }
 
-    //echo is_front_page();
-
-    if (is_front_page()) {
-        $currentPage = (get_query_var("page")) ? get_query_var("page") : 1;
-    } else {
-        $currentPage = (get_query_var("paged")) ? get_query_var("paged") : 1;
+        $currentPage = max(1, $currentPage);
     }
 
-    //echo $currentPage;
+
+    if($total == ''){
+        $total = $wp_query->max_num_pages;
+    }else{
+
+        $wp_query->max_num_pages = $total;
+
+    }
+
+
 
     $pagination = paginate_links([
         "base"      => str_replace(999999999, "%#%", get_pagenum_link(999999999)),
         "format"    => "",
-        "current"   => max(1, $currentPage),
-        "total"     => $wp_query->max_num_pages,
+        "current"   => $currentPage,
+        "total"     => $total,
         "type"      => "plain",
         "prev_text" => 'Назад',
         "next_text" => 'Вперед',
     ]);
 
-    //print_r2($pagination);
-
-    //if (empty($pagination)) {
-    //    return;
-    //}
-
+    if($currentPage > $total){
+        $url_clear = get_clear_url($_SERVER['REQUEST_URI']);
+        wp_redirect( $url_clear, 301 );
+    }
 
 
 
@@ -904,13 +914,13 @@ function my_pagination()
 
     //$pagination = preg_replace( '~/page/1/?([\'"])~', '', $pagination );
     echo $pagination = str_replace("next", "pagination__links-last", $pagination);
-}
 
+}
 
 function team_pagination()
 {
     global $wp_query;
-	
+
 	$currentPage = (get_query_var("page")) ? get_query_var("page") : 1;
 
     $pagination = paginate_links([
@@ -1063,9 +1073,9 @@ function card_script_and_styles() {
 
 
 
- 
+
 	// passing parameters here
-	// actually the <script> tag will be created and the object "card_loadmore_params" will be inside it 
+	// actually the <script> tag will be created and the object "card_loadmore_params" will be inside it
 	wp_localize_script( 'card_scripts', 'card_loadmore_params', array(
 		'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
 		'posts' => json_encode( $wp_query->query_vars ), // everything about your loop is here
@@ -1086,11 +1096,11 @@ function card_script_and_styles() {
 
 add_action('wp_ajax_loadmorebutton', 'card_loadmore_ajax_handler');
 add_action('wp_ajax_nopriv_loadmorebutton', 'card_loadmore_ajax_handler');
- 
+
 function card_loadmore_ajax_handler(){
- 
+
 	// prepare our arguments for the query
-	$params = json_decode( stripslashes( $_POST['query'] ), true ); // query_posts() takes care of the necessary sanitization 
+	$params = json_decode( stripslashes( $_POST['query'] ), true ); // query_posts() takes care of the necessary sanitization
 	$params['paged'] = $_POST['page'] + 1; // we need next page to be loaded
 	$params['post_status'] = 'publish';
 	$params['meta_key'] = $_POST['order'];
@@ -1103,7 +1113,7 @@ function card_loadmore_ajax_handler(){
     }
 
 	//$params['orderby'] = array( 'meta_value_num' => 'desc', 'name' => 'desc' );
-	
+
 	if($term != "banks"){
 
         $params['orderby'] = array( 'meta_value_num' => 'desc', 'name' => 'desc' );
@@ -1145,12 +1155,12 @@ function card_loadmore_ajax_handler(){
 	$params['post__not_in'] = array($_POST['exclude_post'],);
 	// it is always better to use WP_Query but not here
 	query_posts( $params );
- 	
+
 	if( have_posts() ) :
- 
+
 		// run the loop
 		while( have_posts() ): the_post();
- 
+
 			// look into your theme code how the posts are inserted, but you can use your own HTML of course
 			// do you remember? - my example is adapted for Twenty Seventeen theme
 
@@ -1190,13 +1200,13 @@ function card_loadmore_ajax_handler(){
 	endif;
 	die; // here we exit the script and even no wp_reset_query() required!
 }
- 
- 
- 
-add_action('wp_ajax_cardfilter', 'card_filter_function'); 
+
+
+
+add_action('wp_ajax_cardfilter', 'card_filter_function');
 add_action('wp_ajax_nopriv_cardfilter', 'card_filter_function');
- 
-function card_filter_function(){   
+
+function card_filter_function(){
 	$term = $_POST['term'];
 	$order = $_POST['order'];
 
@@ -1253,7 +1263,7 @@ function card_filter_function(){
 		$cat_cards = $_POST['cat_cards'];
 		$gracePeriodSelect = $_POST['period'];
 
-		
+
 
 
 		$ps1 = !empty($_POST['ps1'])?$_POST['ps1']:'';
@@ -1307,7 +1317,7 @@ function card_filter_function(){
 
 	if ($postarr) $args['post__in'] = $postarr;
 	endif;
-	
+
 
 	if($term == 'kredity'):
 	$summ_limit = json_decode( $_POST['summ_limit'] );
@@ -1331,7 +1341,7 @@ function card_filter_function(){
 	$kos9 = !empty($_POST['kos9'])?$_POST['kos9']:'';
 	$kos10 = !empty($_POST['kos10'])?$_POST['kos10']:'';
 
-	
+
 	//if(isset( $order  ) && $order != '' )
 	if(!empty($order)):
 
@@ -1399,7 +1409,7 @@ if ($postarr) $args['post__in'] = $postarr;
 
 
 	// начало фильтра кредитов
-/*	
+/*
 	$args['meta_query'][] = array(
   		'key' => 'archive',
 		'value' => '1',
@@ -1500,7 +1510,7 @@ if ($postarr) $args['post__in'] = $postarr;
             'value' => 'kos1', // matches exactly "red"
             'compare' => 'LIKE',
 	);
-	
+
 	if( isset( $kos2 ) && $kos2 == 'on')
 		$args['meta_query'][] = array(
             'key' => 'credit_other_statements', // name of custom field
@@ -1633,7 +1643,7 @@ if ($postarr) $args['post__in'] = $postarr;
             'value' => 'zct1', // matches exactly "red"
             'compare' => 'LIKE',
 	);
-	
+
 	if( isset( $zct2 ) && $zct2 == 'on')
 		$args['meta_query'][] = array(
             'key' => 'z_get_type', // name of custom field
@@ -1817,7 +1827,7 @@ if ($postarr) $args['post__in'] = $postarr;
             'value' => 'os1', // matches exactly "red"
             'compare' => 'LIKE',
 	);
-	
+
 	if( isset( $os2 ) && $os2 == 'on')
 		$args['meta_query'][] = array(
             'key' => 'card_other_state', // name of custom field
@@ -1900,7 +1910,7 @@ if ($postarr) $args['post__in'] = $postarr;
 		$args['meta_query'][] = array(
 		  		'key' => 'archive',
 				'value' => '0'
-				
+
         );
 
     //print_r2($args);
@@ -1947,7 +1957,7 @@ if ($postarr) $args['post__in'] = $postarr;
             }
 
 
-			
+
 			if ($ii % 4 == 0) {
 				//echo do_shortcode( '[code2 id="7672"]' );
 			}
@@ -1977,9 +1987,9 @@ if ($postarr) $args['post__in'] = $postarr;
 
 
 
-add_action('wp_ajax_bankfilter', 'bank_filter_function'); 
+add_action('wp_ajax_bankfilter', 'bank_filter_function');
 add_action('wp_ajax_nopriv_bankfilter', 'bank_filter_function');
- 
+
 function bank_filter_function(){
 	$bank_id = $_POST['bank'];
 	$debetcard = $_POST['debetcard'];
@@ -1993,12 +2003,12 @@ function bank_filter_function(){
 	$cp6 = !empty($_POST['cp6'])?$_POST['cp6']:'';
 
 	$args = array(
-    'post_type'             => array('bankcard', 'kredity'), 
+    'post_type'             => array('bankcard', 'kredity'),
     'posts_per_page'        => -1,
     'meta_key' => 'ratings_average',
     'orderby' => 'meta_value_num',
     'order' => 'DESC',
-    'post_status' => 'publish' 
+    'post_status' => 'publish'
 	);
 
 	$args['meta_query'] = array('relation' => 'OR');
@@ -2012,7 +2022,7 @@ function bank_filter_function(){
 	    'value' => $bank_id,
 	    'compare' => 'LIKE',
 		);
-	
+
 
 	if(isset($creditcard) || isset($debetcard)  || isset($installmentcard)):
 		$args['meta_query'] = array('relation' => 'AND');
@@ -2035,7 +2045,7 @@ function bank_filter_function(){
 			'field'    => 'slug',
 			'terms'    => 'debetcard',
 		);
-		
+
 		if( isset( $installmentcard ) && $installmentcard == 'on')
 		$args['tax_query'][] = array(
 		  'taxonomy' => 'bankcards',
@@ -2099,7 +2109,7 @@ function bank_filter_function(){
 
 	query_posts( $args );
 	global $wp_query;
-	
+
 	if( have_posts() ) : ?>
 		<?php ob_start(); // start buffering because we do not need to print the posts now ?>
 	<?php while( have_posts() ): the_post();
@@ -2124,10 +2134,10 @@ function bank_filter_function(){
 
 
 
-add_action('wp_ajax_collfilter', 'collfilter_function'); 
+add_action('wp_ajax_collfilter', 'collfilter_function');
 add_action('wp_ajax_nopriv_collfilter', 'collfilter_function');
- 
-function collfilter_function(){   
+
+function collfilter_function(){
 	$term = $_POST['term'];
 	$order = $_POST['order'];
 
@@ -2136,24 +2146,24 @@ function collfilter_function(){
 	if(!empty($order)):
 		$args = array(
 				'meta_key' => $order,
-		    'post_type' => array('kredity', 'zaimy', 'bankcard'), 
+		    'post_type' => array('kredity', 'zaimy', 'bankcard'),
 		    'posts_per_page' => 4,
 		    //'post__in' => $postarr,
 		    //'orderby' => 'name',
 		    'orderby' => array( 'meta_value_num' => 'desc', 'name' => 'desc' ),
 		    'order' => 'DESC'
-		);		
+		);
 	else:
 		$args = array(
-		    'post_type' => array('kredity', 'zaimy', 'bankcard'), 
+		    'post_type' => array('kredity', 'zaimy', 'bankcard'),
 		    'posts_per_page' => 4,
 		    //'post__in' => $postarr,
 		    'orderby' => 'name',
 		    'order' => 'DESC'
-		);		
+		);
 	endif;
 	$args['post__in'] = $postarr;
-	
+
 	query_posts( $args );
 	global $wp_query;
 
@@ -2203,11 +2213,11 @@ function ajax_search()
                     	$term_slug = $terms[0]->slug;
                     	$post_type = get_post_type( get_the_id() );
                     	if($term_slug == 'creditcard'):
-                    	echo 'Кредитные карты'; endif; 
+                    	echo 'Кредитные карты'; endif;
                     	if($term_slug == 'debetcard'):
-                    	echo 'Дебетовые карты'; endif; 
+                    	echo 'Дебетовые карты'; endif;
                     	if($term_slug == 'installmentcard'):
-                    	echo 'Карты рассрочки'; endif; 
+                    	echo 'Карты рассрочки'; endif;
                     	if($post_type == 'banks'):
                     	echo 'Банки'; endif;
                     	if($post_type == 'zaimy'):
@@ -2219,15 +2229,15 @@ function ajax_search()
                     	if(in_category( 'blog' )):
                     	echo 'Журнал'; endif;
                     	if(in_category( 'news' )):
-                    	echo 'Новости'; endif; 
+                    	echo 'Новости'; endif;
                     	if($post_type == 'collection'):
                     	//if($post_type( 'collection' )):
-                    	echo 'Подборка'; endif; ?>                    	
+                    	echo 'Подборка'; endif; ?>
                     </div>
                 </div>
             </div>
         <?php endwhile;
-    } 
+    }
     exit;
 }
 
@@ -2295,7 +2305,7 @@ add_filter( 'comment_post_redirect', function ( $location ) {
 } );
 
 
-add_action('wp_ajax_increment_counter', 'my_increment_counter');   
+add_action('wp_ajax_increment_counter', 'my_increment_counter');
 add_action('wp_ajax_nopriv_increment_counter', 'my_increment_counter');
 
 function my_increment_counter(){
@@ -2359,9 +2369,9 @@ function myown_comment($comment, $args, $depth) {
                          <div class="mr-2"><svg width="14" height="19" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><use xlink:href="<?php bloginfo('template_url'); ?>/img/icons.svg#person" x="0" y="0"></use></svg></div>
                          <?php if($user_role[0] == ''):
                           echo 'Гость';
-                          endif; 
+                          endif;
                           if($user_role[0] != ''):
-                          echo $user_role[0]; 
+                          echo $user_role[0];
                           endif; ?>
                      </div>
                      <div class="card__icon d-flex align-items-center ml-3 ml-sm-4">
@@ -2393,7 +2403,7 @@ function myown_comment($comment, $args, $depth) {
          <div class="comment__one-footer d-flex flex-wrap align-items-center">
               <?php echo comment_reply_link( [ 'reply_text' => "Ответить", 'depth' => -1 ], $comment_id, $comment_post_id); ?>
              <div class="comment__one-date mr-md-4 order-md-1">
-              <?php echo  get_comment_date( 'd.m.y'); ?> в 
+              <?php echo  get_comment_date( 'd.m.y'); ?> в
               <?php echo get_comment_date('H:i') ?>
               </div>
              <div class="comment__one-like order-md-4 ml-auto d-flex justify-content-between">
@@ -2440,9 +2450,9 @@ function myown_comment($comment, $args, $depth) {
                      <div class="mr-2"><svg width="14" height="19" viewBox="0 0 16 21" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><use xlink:href="<?php bloginfo('template_url'); ?>/img/icons.svg#person" x="0" y="0"></use></svg></div>
                      <?php if($user_role[0] == ''):
                       echo 'Гость';
-                      endif; 
+                      endif;
                       if($user_role[0] != ''):
-                      echo $user_role[0]; 
+                      echo $user_role[0];
                       endif; ?>
                  </div>
                  <div class="card__icon d-flex align-items-center ml-3 ml-sm-4">
@@ -2474,7 +2484,7 @@ function myown_comment($comment, $args, $depth) {
      </div>
      <div class="comment__one-footer d-flex flex-wrap align-items-center">
          <div class="comment__one-date mr-md-4 order-md-1">
-          <?php echo  get_comment_date('d.m.y'); ?> в 
+          <?php echo  get_comment_date('d.m.y'); ?> в
           <?php echo get_comment_date('H:i'); ?>
           </div>
          <div class="comment__one-like order-md-4 ml-auto d-flex justify-content-between">
@@ -2486,7 +2496,7 @@ function myown_comment($comment, $args, $depth) {
 </div>
 <?php endif; ?>
  <?php
- } 
+ }
 
 
 function wpse16119876_init_session() {
@@ -2656,7 +2666,7 @@ function code5_register_cpt() {
 add_action( 'init', 'code5_register_cpt' );
 
 function create_menupages() {
-  
+
 		add_menu_page(
 			'Шорткоды',
 			'Шорткоды',
@@ -2666,9 +2676,9 @@ function create_menupages() {
 			'dashicons-format-aside', // иконка
 			10 // выбираем позицию
 		);
-	
+
 }
-	
+
 add_action('admin_menu', 'create_menupages');
 
 
@@ -2681,21 +2691,21 @@ function new_table_collection_func( $atts ){
     ob_start();
     global $allposts_collection;
     global $type_collection;
-    
+
     $type = $type_collection; ?>
-    
+
     <?php if ($type) { ?>
-    
+
         <div class="section__header d-flex justify-content-between align-items-center mb-4">
             <h2 class="title mb-0">Сравнение условий ТОП предложений месяца</h2>
         </div>
-    
+
     <?php } ?>
-    
-    
-    
+
+
+
     <div class="code3wrapper new_table_collection_func" id="table_collection">
-    
+
      <?php if ($type == 'kredity') { ?>
          <div class="code3">
     <!--     <span class="frecom">Финабанк рекомендует!</span>-->
@@ -2723,7 +2733,7 @@ function new_table_collection_func( $atts ){
             )
         )
     );
-    
+
     while( $query->have_posts() ){ $query->the_post(); ?>
              <div class="code3text">
                  <div class="w30 strong td2">
@@ -2740,21 +2750,21 @@ function new_table_collection_func( $atts ){
                      <div class="hidden-lg">Срок</div>
                      <div class="td-val">до <?php $field = get_field('credit_period'); echo $field['label']; ?></div>
                  </div>
-    
+
                  <?php if(get_field('opisanie_psk_1')): ?>
-    
+
                  <div class="w30 td text-center">
                      <div class="hidden-lg">ПСК</div>
                      <div class="td-val"><?php echo get_field('opisanie_psk_1'); ?>% - <?php echo get_field('opisanie_psk_2'); ?>%</div>
                  </div>
-    
+
                  <?php endif; ?>
-    
+
              </div>
          <?php } ?>
          </div>
     <?php } ?>
-    
+
     <?php if ($type == 'zaimy') { ?>
          <div class="code3"><span class="frecom">Финабанк рекомендует!</span>
              <div class="code3head">
@@ -2765,7 +2775,7 @@ function new_table_collection_func( $atts ){
                  <div class="text-center">Срок</div>
                  <div class="text-center">Рейтинг</div>
              </div>
-    
+
     <?php
     $query = new WP_Query(
         array(
@@ -2828,7 +2838,7 @@ function new_table_collection_func( $atts ){
         </button>
         </div>
     <?php } ?>
-    
+
     <?php if ($type == 'creditcard' || $type == 'installmentcard') { ?>
          <div class="code3"><span class="frecom">Финабанк рекомендует!</span>
              <div class="code3head">
@@ -2858,7 +2868,7 @@ function new_table_collection_func( $atts ){
             )
         )
     );
-    
+
     while( $query->have_posts() ){ $query->the_post(); ?>
              <div class="code3text">
                  <div class="w30 strong td2">
@@ -2874,7 +2884,7 @@ function new_table_collection_func( $atts ){
                  <div class="td text-center">
                      <div class="hidden-lg">Льготный период</div>
                      <div class="td-val">
-                         <?php 
+                         <?php
                              $field = get_field('card_period');
                              $value = $field['value'];
                              $label = $field['choices'][ $value ];
@@ -2909,8 +2919,8 @@ function new_table_collection_func( $atts ){
         <?php } ?>
          </div>
      <?php } ?>
-    
-    
+
+
      <?php if ($type == 'debetcard') { ?>
          <div class="code3"><span class="frecom">Финабанк рекомендует!</span>
              <div class="code3head">
@@ -2922,7 +2932,7 @@ function new_table_collection_func( $atts ){
                  <div class="text-center">Стоимость</div>
                  <div class="text-center">Рейтинг</div>
              </div>
-    
+
     <?php
     $query = new WP_Query(
         array(
@@ -2941,7 +2951,7 @@ function new_table_collection_func( $atts ){
             )
          )
     );
-    
+
     while( $query->have_posts() ){ $query->the_post(); ?>
              <div class="code3text">
                  <div class="w30 strong td2">
@@ -2953,7 +2963,7 @@ function new_table_collection_func( $atts ){
                  <div class="td text-center">
                      <div class="hidden-lg">Кэшбек</div>
                      <div class="td-val">
-                         <?php 
+                         <?php
                              $field = get_field('card_cashback');
                              $value = $field['value'];
                              echo $field['label'];
@@ -2992,7 +3002,7 @@ function new_table_collection_func( $atts ){
          </div>
      <?php } ?>
     </div>
-    
+
     <?php
     $table_collection = ob_get_clean();
     return $table_collection;
@@ -3000,7 +3010,7 @@ function new_table_collection_func( $atts ){
 
 
 function table_collection_func( $atts ){
-ob_start(); 
+ob_start();
 global $allposts_collection;
 global $type_collection;
 
@@ -3019,25 +3029,25 @@ $type = $type_collection; ?>
              <div class="text-center">Рейтинг</div>
          </div>
 <?php
-$query = new WP_Query( 
-    array( 
+$query = new WP_Query(
+    array(
     	'posts_per_page' => -1,
-    	'post_type' => $type, 
+    	'post_type' => $type,
     	'post__in' => $allposts_collection,
     	'meta_key' => 'ratings_average',
     	'orderby' => 'meta_value_num',
-    	'order' => 'DESC', 
+    	'order' => 'DESC',
     	'post_status' => 'publish',
     	'meta_query' => array(
 	        array(
 	            'key' => 'archive',
 	            'value'    => '0'
 	        ),
-	    )    	
-    ) 
+	    )
+    )
 );
 
-while( $query->have_posts() ){ $query->the_post(); ?> 
+while( $query->have_posts() ){ $query->the_post(); ?>
          <div class="code3text">
          <div class="w30 strong td2"><a href="<?php the_permalink(); ?>" class="stretched-link" onclick="ym(35020350,'reachGoal','click_table_collection'); return true;">
          	<img src="<?= get_field('bank_logo', get_field('product_bank', get_the_ID())) ?>" alt="<?php the_title(); ?>">
@@ -3051,12 +3061,12 @@ while( $query->have_posts() ){ $query->the_post(); ?>
                                             //$label = $field['choices'][ $value ];
                                             echo $field['label'] ?></div></div>
              <div class="td text-center"><div class="hidden-lg">Рейтинг</div><div class="rate3 td-val text-center"><div>
-             <svg style="margin-right:5px;fill:var(--warning)" width="18" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" xml:space="preserve"><use xlink:href="https://finabank.ru/wp-content/themes/finbank_theme/img/icons.svg#starLine" x="0" y="0"></use></svg>			
+             <svg style="margin-right:5px;fill:var(--warning)" width="18" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" xml:space="preserve"><use xlink:href="https://finabank.ru/wp-content/themes/finbank_theme/img/icons.svg#starLine" x="0" y="0"></use></svg>
              </div> <div><?= get_field('ratings_average'); ?></div></div></div>
          </div>
-     <?php } ?> 
+     <?php } ?>
      </div>
-<?php } ?> 	
+<?php } ?>
 
 <?php if ($type == 'zaimy') { ?>
      <div class="code3"><span class="frecom">Финабанк рекомендует!</span>
@@ -3070,31 +3080,31 @@ while( $query->have_posts() ){ $query->the_post(); ?>
          </div>
 
 <?php
-$query = new WP_Query( 
-    array( 
+$query = new WP_Query(
+    array(
     	'posts_per_page' => -1,
-    	'post_type' => $type, 
+    	'post_type' => $type,
     	'post__in' => $allposts_collection,
     	'meta_key' => 'ratings_average',
     	'orderby' => 'meta_value_num',
-    	'order' => 'DESC', 
+    	'order' => 'DESC',
     	'post_status' => 'publish',
     	'meta_query' => array(
 	        array(
 	            'key' => 'archive',
 	            'value'    => '0'
 	        ),
-	    )    	 
-   	) 
+	    )
+   	)
 );
 $counter_prod = 1;
-while( $query->have_posts() ){ $query->the_post(); ?>	
+while( $query->have_posts() ){ $query->the_post(); ?>
          <div class="code3text <?php if($counter_prod >10): echo 'div__hidden'; endif; ?>">
          <div class="w30 strong td2">
          	<a href="<?php the_permalink(); ?>" class="stretched-link" onclick="ym(35020350,'reachGoal','click_shortcode_sheet'); return true;">
 				<img src="<?= get_field('z_organization_logo') ?>" alt="<?php the_title(); ?>">
          		<?php the_title(); ?>
-         			
+
          		</a>
          </div>
          <div class="td text-center"><div class="hidden-lg">Сумма</div><div class="td-val"><?= number_format(get_field('z_sum'), 0, '.', ' '); ?> ₽</div></div>
@@ -3102,14 +3112,14 @@ while( $query->have_posts() ){ $query->the_post(); ?>
          <div class="td text-center"><div class="hidden-lg">% ставка</div><div class="td-val srok1">От <?= get_field('z_stavka') ?>%</div></div>
          <div class="td text-center"><div class="hidden-lg">Срок</div><div class="td-val">до <?= get_field('z_time'); ?> дней</div></div>
          <div class="td text-center"><div class="hidden-lg">Рейтинг</div><div class="rate3 text-center td-val"><div>
-             <svg style="margin-right:5px;fill:var(--warning)" width="18" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" xml:space="preserve"><use xlink:href="https://finabank.ru/wp-content/themes/finbank_theme/img/icons.svg#starLine" x="0" y="0"></use></svg>			
+             <svg style="margin-right:5px;fill:var(--warning)" width="18" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" xml:space="preserve"><use xlink:href="https://finabank.ru/wp-content/themes/finbank_theme/img/icons.svg#starLine" x="0" y="0"></use></svg>
              </div> <div><?= get_field('ratings_average'); ?></div></div></div>
          </div>
     <?php $counter_prod++; } ?>
     <button class="btn__details" data-target="table_collection" data-text-open="Показать еще" data-text-hide="Скрыть">
         <span class="btn__details-icon"></span>
         <span class="btn__details-text">Показать еще</span>
-    </button>    
+    </button>
 	</div>
 <?php }	?>
 
@@ -3125,21 +3135,21 @@ while( $query->have_posts() ){ $query->the_post(); ?>
              <div class="text-center">Рейтинг</div>
          </div>
 <?php
-$query = new WP_Query( 
-    array( 
+$query = new WP_Query(
+    array(
     	'posts_per_page' => -1,
-    	'post_type' => array('bankcard'), 
+    	'post_type' => array('bankcard'),
     	'post__in' => $allposts_collection,
     	'meta_key' => 'ratings_average',
     	'orderby' => 'meta_value_num',
-    	'order' => 'DESC', 
+    	'order' => 'DESC',
     	'post_status' => 'publish',
     	'meta_query' => array(
 	        array(
 	            'key' => 'archive',
 	            'value'    => '0'
 	        ),
-	    ) 
+	    )
     )
 );
 
@@ -3155,18 +3165,18 @@ while( $query->have_posts() ){ $query->the_post(); ?>
                                             $label = $field['choices'][ $value ];
                                             echo $field['label'] ?></div></div>
              <div class="td text-center"><div class="hidden-lg">% ставка</div><div class="td-val srok1">От <?php echo the_field('card_stavka') ?>%</div></div>
-             <div class="td text-center"><div class="hidden-lg">Кэшбек</div><div class="td-val srok1"><?php $card_cashback = get_field('card_cashback'); 
+             <div class="td text-center"><div class="hidden-lg">Кэшбек</div><div class="td-val srok1"><?php $card_cashback = get_field('card_cashback');
                                        echo $card_cashback; ?></div></div>
              <div class="td text-center"><div class="hidden-lg">Стоимость</div><div class="td-val srok1">От <?php echo the_field('card_cost') ?> ₽</div></div>
              <div class="td text-center"><div class="hidden-lg">Рейтинг</div><div class="rate3 text-center td-val"><div>
-             <svg style="margin-right:5px;fill:var(--warning)" width="18" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" xml:space="preserve"><use xlink:href="https://finabank.ru/wp-content/themes/finbank_theme/img/icons.svg#starLine" x="0" y="0"></use></svg>			
+             <svg style="margin-right:5px;fill:var(--warning)" width="18" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" xml:space="preserve"><use xlink:href="https://finabank.ru/wp-content/themes/finbank_theme/img/icons.svg#starLine" x="0" y="0"></use></svg>
              </div> <div><?= get_field('ratings_average'); ?></div></div></div>
         </div>
     <?php }	?>
      </div>
  <?php } ?>
 
- 
+
  <?php if ($type == 'debetcard') { ?>
      <div class="code3"><span class="frecom">Финабанк рекомендует!</span>
          <div class="code3head">
@@ -3180,21 +3190,21 @@ while( $query->have_posts() ){ $query->the_post(); ?>
          </div>
 
 <?php
-$query = new WP_Query( 
+$query = new WP_Query(
     array(
     	'posts_per_page' => -1,
-    	'post_type' => array('bankcard'), 
+    	'post_type' => array('bankcard'),
     	'post__in' => $allposts_collection,
     	'meta_key' => 'ratings_average',
     	'orderby' => 'meta_value_num',
-    	'order' => 'DESC', 
+    	'order' => 'DESC',
     	'post_status' => 'publish',
     	'meta_query' => array(
 	        array(
 	            'key' => 'archive',
 	            'value'    => '0'
 	        ),
-	    )    	 
+	    )
      )
 );
 
@@ -3212,7 +3222,7 @@ while( $query->have_posts() ){ $query->the_post(); ?>
              <div class="td text-center"><div class="hidden-lg">Овердрафт</div><div class="td-val srok1"><?php echo the_field('card_overdraft') ?></div></div>
              <div class="td text-center"><div class="hidden-lg">Стоимость</div><div class="td-val srok1"><?php echo the_field('card_cost') ?> ₽</div></div>
              <div class="td text-center"><div class="hidden-lg">Рейтинг</div><div class="rate3 text-center td-val"><div>
-             <svg style="margin-right:5px;fill:var(--warning)" width="18" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" xml:space="preserve"><use xlink:href="https://finabank.ru/wp-content/themes/finbank_theme/img/icons.svg#starLine" x="0" y="0"></use></svg>			
+             <svg style="margin-right:5px;fill:var(--warning)" width="18" height="17" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17" xml:space="preserve"><use xlink:href="https://finabank.ru/wp-content/themes/finbank_theme/img/icons.svg#starLine" x="0" y="0"></use></svg>
              </div> <div><?= get_field('ratings_average'); ?></div></div></div>
          </div>
      <?php } ?>
@@ -3222,7 +3232,7 @@ while( $query->have_posts() ){ $query->the_post(); ?>
 
 <?php
 $table_collection = ob_get_clean();
-return $table_collection;  
+return $table_collection;
 
 }
 
@@ -3269,8 +3279,8 @@ function roulette($items)
 
 	$decimals = numberOfDecimals($sumOfPercents);
 	$multiplier = 1;
-	for ($i=0; $i < $decimals; $i++) 
-	{ 
+	for ($i=0; $i < $decimals; $i++)
+	{
 		$multiplier *= 10;
 	}
 
@@ -3278,7 +3288,7 @@ function roulette($items)
 	$rand = rand(1, $sumOfPercents);
 	//echo "max percent = {$sumOfPercents}\n";
 	//echo "rand = $rand\n";
-	
+
 	$rangeStart = 1;
 	foreach($items as $itemKey => $itemsPercent)
 	{
