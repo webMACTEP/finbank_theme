@@ -13,6 +13,16 @@
 // var(--range-value-border)
 // test
 .zaimy-new {
+
+    .credits__view-title{
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
+    .card-container .bank__item-footer{
+        border-top: none;
+    }
     .leaders__item:before{
         //display: none;
         border-bottom: none;
@@ -408,17 +418,27 @@
         color: #f39c12;
     }
 
-    // .rating-footer .star:hover,
-    // .rating-footer .star:hover ~ .star {
-    //     color: #f39c12;
-    // }
+    .rating-footer .star {
+        font-size: 32px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.2s;
+        padding-right: 5px;
+    }
+
+    .rating-footer .star:hover,
+    .rating-footer .star:hover ~ .star {
+        color: #f39c12;
+    }
+
+    
 
     .client-rating .stars {
         display: flex;
         margin: 0px 0px 0px auto;
     }
     .client-rating .average-rating {
-        min-width: 50px;
+        //min-width: 50px;
         text-align: center;
         font-size: 14px;
         display: none;
@@ -429,25 +449,21 @@
         color: #ccc;
         cursor: pointer;
         transition: color 0.2s;
-        margin-right: 5px;
+        padding-right: 5px;
     }
 
     .client-rating .star.filled {
         color: #f39c12;
     }
-
-    // .client-rating .star:hover,
-    // .client-rating .star:hover ~ .star {
-    //     color: #f39c12;
-    // }
-
-    .rating-footer .star {
-        font-size: 32px;
-        color: #ccc;
-        cursor: pointer;
-        transition: color 0.2s;
-        margin-right: 5px;
+    .client-rating .star.half {
+        color: #f39c12;
     }
+
+    .client-rating .star:hover,
+    .client-rating .star:hover ~ .star {
+        color: #f39c12;
+    }
+
 
     .rating-rows {
         .star-rating {
@@ -813,7 +829,20 @@
 }
 
 @media (max-width: 768px) {
-    
+    .zaimy-new .tariffs-rows .head{
+        gap: 16px;
+    }
+    .zaimy-new .tariffs-rows{
+        .info-item{
+            
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    .zaimy-new .tariffs-rows .info{
+        
+        display: none;
+    }
     .btn-up,
     .present-icon{
         width: 44px;height: 44px;

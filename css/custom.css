@@ -5415,6 +5415,15 @@ a.cld-like-dislike-trigger {
   color: #fff;
 }
 
+.zaimy-new .credits__view-title {
+  display: none;
+}
+.zaimy-new .credits__view-title.active {
+  display: block;
+}
+.zaimy-new .card-container .bank__item-footer {
+  border-top: none;
+}
 .zaimy-new .leaders__item:before {
   border-bottom: none;
 }
@@ -5777,12 +5786,22 @@ a.cld-like-dislike-trigger {
 .zaimy-new .rating-footer .star.filled {
   color: #f39c12;
 }
+.zaimy-new .rating-footer .star {
+  font-size: 32px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding-right: 5px;
+}
+.zaimy-new .rating-footer .star:hover,
+.zaimy-new .rating-footer .star:hover ~ .star {
+  color: #f39c12;
+}
 .zaimy-new .client-rating .stars {
   display: flex;
   margin: 0px 0px 0px auto;
 }
 .zaimy-new .client-rating .average-rating {
-  min-width: 50px;
   text-align: center;
   font-size: 14px;
   display: none;
@@ -5792,17 +5811,17 @@ a.cld-like-dislike-trigger {
   color: #ccc;
   cursor: pointer;
   transition: color 0.2s;
-  margin-right: 5px;
+  padding-right: 5px;
 }
 .zaimy-new .client-rating .star.filled {
   color: #f39c12;
 }
-.zaimy-new .rating-footer .star {
-  font-size: 32px;
-  color: #ccc;
-  cursor: pointer;
-  transition: color 0.2s;
-  margin-right: 5px;
+.zaimy-new .client-rating .star.half {
+  color: #f39c12;
+}
+.zaimy-new .client-rating .star:hover,
+.zaimy-new .client-rating .star:hover ~ .star {
+  color: #f39c12;
 }
 .zaimy-new .rating-rows {
   background: var(--white);
@@ -6137,6 +6156,16 @@ a.cld-like-dislike-trigger {
 }
 
 @media (max-width: 768px) {
+  .zaimy-new .tariffs-rows .head {
+    gap: 16px;
+  }
+  .zaimy-new .tariffs-rows .info-item {
+    display: flex;
+    justify-content: space-between;
+  }
+  .zaimy-new .tariffs-rows .info {
+    display: none;
+  }
   .btn-up,
   .present-icon {
     width: 44px;

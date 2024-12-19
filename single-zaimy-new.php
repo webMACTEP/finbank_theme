@@ -41,7 +41,10 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
                     <?php endif; ?>
                 </div>
             </div>
-            <h1 class="credits__view-title mb-1 mb-xl-4">Займ в <?php echo the_title() ?></h1>
+            <h1 class="credits__view-title mb-1 mb-xl-4 heads-about active">Займ в <?php echo the_title() ?></h1>
+            <h1 class="credits__view-title mb-1 mb-xl-4 heads-lk">Личный кабинет <?php echo the_title() ?></h1>
+            <h1 class="credits__view-title mb-1 mb-xl-4 heads-contacts">Контакты <?php echo the_title() ?></h1>
+            <h1 class="credits__view-title mb-1 mb-xl-4 heads-promo">Промокоды, скидки в <?php echo the_title() ?></h1>
 
             <div class="credits__view-mob-description">
                 <?php echo the_field('product_text_desc_mob', $ID) ?>
@@ -1627,7 +1630,7 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
 
 
                                                     <ul class="leaders">
-                                                        <div class="bank__item-footer text-center pt-3 pb-2 mx-n2 mt-2">
+                                                        <div class="bank__item-footer text-center  pb-2 mx-n2 mt-2">
                                                             <li class="leaders__item mb-1">
                                                                 <div class="leaders__item-title">Лимит</div>
                                                                 <div class="leaders__item-value"><?= number_format(get_field('card_cred_limit'), 0, '.', ' '); ?> ₽</div>
@@ -1723,12 +1726,12 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
 
 
                                                     <ul class="leaders">
-                                                        <div class="bank__item-footer text-center pt-3 pb-2 mx-n2 mt-2">
+                                                        <div class="bank__item-footer text-center pb-2 mx-n2 mt-2">
                                                             <!-- <li class="leaders__item mb-1">
                                                                 <div class="leaders__item-title">Снятие без %</div>
                                                                 <div class="leaders__item-value">До <?= number_format(get_field('non_pecent_money'), 0, '.', ' '); ?> ₽</div>
                                                             </li> -->
-                                                            
+
                                                             <!-- <li class="leaders__item mb-1">
                                                                 <div class="leaders__item-title">Тип кешбэка</div>
                                                                 <div class="leaders__item-value"><?php $field = get_field('card_cashback_type');
@@ -1824,7 +1827,7 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
 
 
                                                     <ul class="leaders">
-                                                        <div class="bank__item-footer text-center pt-3 pb-2 mx-n2 mt-2">
+                                                        <div class="bank__item-footer text-center pb-2 mx-n2 mt-2">
                                                             <li class="leaders__item mb-1">
                                                                 <div class="leaders__item-title">Лимит</div>
                                                                 <div class="leaders__item-value"><?= number_format(get_field('card_cred_limit'), 0, '.', ' '); ?> ₽</div>
@@ -1926,14 +1929,16 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
                                                                                                 //$label = $field['choices'][ $value ];
                                                                                                 echo $field['label'] ?></div>
                                                         </li>
-                                                        <?php if (get_field('opisanie_psk')): ?>
+                                                        
                                                             <li class="leaders__item mb-1">
                                                                 <div class="leaders__item-title">ПСК</div>
+                                                                <?php if (get_field('opisanie_psk')): ?>
                                                                 <div class="leaders__item-value">
                                                                     <?= get_field('opisanie_psk') ?>% - <?= get_field('opisanie_psk_2') ?>%
                                                                 </div>
+                                                                 <?php endif; ?>
                                                             </li>
-                                                        <?php endif; ?>
+                                                       
 
                                                     </ul>
                                                     <div class="card__actions mt-3 d-flex">
@@ -1999,7 +2004,12 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
                                                         </li>
                                                         <li class="leaders__item mb-1">
                                                             <div class="leaders__item-title">ПСК</div>
-                                                            <div class="leaders__item-value"></div>
+                                                            <?php if (get_field('z_psk_1')) : ?>
+                                                                <div class="leaders__item-value">
+                                                                    <?= get_field('z_psk_1') ?>% - <?= get_field('z_psk_2') ?>%
+                                                                </div>
+                                                            <?php endif; ?>
+
                                                         </li>
 
                                                     </ul>
@@ -2078,11 +2088,11 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
                                 }
 
                                 // Добавляем элемент для отображения числового рейтинга
-                                echo '<div class="rating-stat"><span class="average-rating"> Оценок ' . ($rating_count > 0 ? $rating_count : '0') . ', </span>';
-                                echo '<span class="average-rating"> среднее ' . ($average_rating > 0 ? $average_rating : '0') . ' из 5</span></div>';
-                                //echo '<span class="average-rating">' . ($rating_total > 0 ? $rating_total : '0') . '</span>';
-
+                                echo '<div class="rating-stat">';
+                                echo 'Оценок ' . ($rating_count > 0 ? $rating_count : '0') . ', ';
+                                echo 'среднее <span class="average-rating">' . ($average_rating > 0 ? $average_rating : '0') . '</span> из 5';
                                 echo '</div>';
+
                             endif;
 
                             $additional_index++;
@@ -2120,76 +2130,81 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
         // Получаем все элементы меню
         const menuItems = document.querySelectorAll('.sidebar__menu > li > a');
 
-        // Получаем дополнительные кнопки
+        // Если есть дополнительные кнопки, получаем их (иначе удалите эти строки)
         const additionalButton = document.getElementById('additional-button');
         const scrollCommentsButton = document.getElementById('scroll-comments-button');
         const scrollFaqButton = document.getElementById('scroll-faq-button');
 
-        // Функция для удаления класса 'active' у всех пунктов меню и контента
+        // Функция для удаления класса 'active' у всех пунктов меню, заголовков и контентных блоков
         function removeActiveClasses() {
+            // Удаляем 'active' у пунктов меню
             menuItems.forEach(item => item.classList.remove('active'));
+
+            // Удаляем 'active' у всех heads-*
+            const allHeads = document.querySelectorAll('.heads-about, .heads-lk, .heads-contacts, .heads-promo');
+            allHeads.forEach(head => head.classList.remove('active'));
+
+            // Удаляем 'active' у контентных блоков
             const contentBlocks = document.querySelectorAll('.content-block');
             contentBlocks.forEach(block => block.classList.remove('active'));
         }
 
-        // Функция для добавления класса 'active' выбранному пункту и соответствующему контенту
+        // Функция для добавления класса 'active' выбранному пункту меню, соответствующему заголовку и контентному блоку
         function setActive(itemClass) {
-            // Добавляем класс active выбранному пункту
-            const selectedItem = document.querySelector(`.${itemClass}`);
-            if (selectedItem) {
-                selectedItem.classList.add('active');
+            // Активируем соответствующий заголовок: заменим 'item-' на 'heads-'
+            const headsClass = itemClass.replace('item-', 'heads-');
+            const headsElement = document.querySelector('.' + headsClass);
+            if (headsElement) {
+                headsElement.classList.add('active');
             }
 
-            // Определяем соответствующий контентный блок
-            const contentClass = itemClass.replace('item', 'content');
+            // Активируем соответствующий контентный блок: заменим 'item-' на 'content-'
+            const contentClass = itemClass.replace('item-', 'content-');
             const selectedContent = document.querySelector(`.${contentClass}`);
             if (selectedContent) {
                 selectedContent.classList.add('active');
+            }
+
+            // Подсвечиваем сам пункт меню
+            const selectedItem = document.querySelector(`.${itemClass}`);
+            if (selectedItem) {
+                selectedItem.classList.add('active');
             }
         }
 
         // Добавляем обработчик события клика на каждый пункт меню
         menuItems.forEach(item => {
             item.addEventListener('click', function(event) {
-                // Получаем класс текущего элемента, например 'item-contacts'
                 const classes = this.className.split(' ');
                 const itemClass = classes.find(cls => cls.startsWith('item-'));
 
                 if (itemClass) {
-                    event.preventDefault(); // Предотвращаем переход только для внутренних ссылок
+                    event.preventDefault();
                     removeActiveClasses();
                     setActive(itemClass);
                 }
-                // Для остальных ссылок (например, tel:) стандартное поведение не изменяется
             });
         });
 
-        // Добавляем обработчик события клика на дополнительную кнопку (Личный Кабинет)
+        // Обработчик для additionalButton (при наличии)
         if (additionalButton) {
             additionalButton.addEventListener('click', function() {
-                removeActiveClasses(); // Сбрасываем остальные активные классы
-                setActive('item-lk'); // Добавляем класс 'active' к 'item-lk' и соответствующему контенту
+                removeActiveClasses();
+                setActive('item-lk');
             });
         }
 
-        // Добавляем обработчик события клика на кнопку "Комментарии"
+        // Обработчики для кнопок "Комментарии" и "FAQ" (при наличии)
         if (scrollCommentsButton) {
             scrollCommentsButton.addEventListener('click', function() {
-                // Активируем первый пункт меню и первый блок контента
                 activateFirstMenuItem();
-
-                // Прокручиваем страницу до блока с id="comments"
                 scrollToSection('comments');
             });
         }
 
-        // Добавляем обработчик события клика на кнопку "FAQ"
         if (scrollFaqButton) {
             scrollFaqButton.addEventListener('click', function() {
-                // Активируем первый пункт меню и первый блок контента
                 activateFirstMenuItem();
-
-                // Прокручиваем страницу до блока с id="faq"
                 scrollToSection('faq');
             });
         }
@@ -2211,20 +2226,14 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
         function scrollToSection(sectionId) {
             const targetSection = document.getElementById(sectionId);
             if (targetSection) {
-                // Плавная прокрутка до элемента
                 targetSection.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
-
-
             }
         }
 
-
-
-
-        // Выбираем все элементы с классом 'item'
+        // Логика для кнопок "Открыть/Закрыть" внутри .content-promo .items .item
         const items = document.querySelectorAll('.content-promo .items .item');
 
         items.forEach(function(item) {
@@ -2232,21 +2241,23 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
             const closeBtn = item.querySelector('.close');
             const textBlock = item.querySelector('.text');
 
-            // Обработчик для кнопки 'open'
-            openBtn.addEventListener('click', function() {
-                openBtn.classList.remove('active');
-                closeBtn.classList.add('active');
-                textBlock.classList.add('active');
-            });
+            if (openBtn && closeBtn && textBlock) {
+                openBtn.addEventListener('click', function() {
+                    openBtn.classList.remove('active');
+                    closeBtn.classList.add('active');
+                    textBlock.classList.add('active');
+                });
 
-            // Обработчик для кнопки 'close'
-            closeBtn.addEventListener('click', function() {
-                closeBtn.classList.remove('active');
-                textBlock.classList.remove('active');
-                openBtn.classList.add('active');
-            });
+                closeBtn.addEventListener('click', function() {
+                    closeBtn.classList.remove('active');
+                    textBlock.classList.remove('active');
+                    openBtn.classList.add('active');
+                });
+            }
         });
     });
 </script>
+
+
 
 <?php get_footer(); ?>
