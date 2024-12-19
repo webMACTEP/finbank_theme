@@ -440,3 +440,4 @@ function handle_like_dislike_ajax()
 }
 add_action('wp_ajax_handle_like_dislike_ajax', 'handle_like_dislike_ajax');
 add_action('wp_ajax_nopriv_handle_like_dislike_ajax', 'handle_like_dislike_ajax');
+?>

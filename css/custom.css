@@ -5415,6 +5415,23 @@ a.cld-like-dislike-trigger {
   color: #fff;
 }
 
+.zaimy-new #openAdditionalCommentForm,
+.zaimy-new #openCommentForm {
+  color: #fff;
+  cursor: pointer;
+}
+.zaimy-new .additional-comment-form {
+  display: none;
+}
+.zaimy-new .additional-comment-form.active {
+  display: flex;
+}
+.zaimy-new .commentForm {
+  display: none;
+}
+.zaimy-new .commentForm.active {
+  display: block;
+}
 .zaimy-new .credits__view-title {
   display: none;
 }

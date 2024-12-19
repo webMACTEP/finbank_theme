@@ -1217,7 +1217,7 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
                         </div>
                         <?php if (count($comments) != "0"): ?>
                             <div class="comments__action">
-                                <a class="btn btn-primary" href="#commentForm">
+                                <a class="btn btn-primary" id="openCommentForm">
                                     Оставить отзыв
                                 </a>
                                 <a href="<?php //echo  get_page_link(1503); 
@@ -1227,7 +1227,7 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
                     </div>
                     <div class="section">
                         <!-- form -->
-                        <div class="form" id="commentForm">
+                        <div class="form commentForm" id="commentForm">
                             <?php
                             $new_args = $args + ['is_detail_page' => 'Y'];
                             get_template_part('all_template/commentForm', null, $new_args);
@@ -1247,49 +1247,54 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
                             display_additional_comments($current_post_id);
                             ?>
                         </div>
-                        <div class="new-comment-form">
-                            <?php // if (is_user_logged_in()): 
-                            ?>
-                            <!-- <h3>Оставить комментарий</h3> -->
-                            <form id="additional-comment-form" method="post" class="row">
-                                <input type="hidden" name="action" value="handle_additional_comment_ajax">
-                                <input type="hidden" name="additional_comment_nonce" value="<?php echo wp_create_nonce('additional_comment_form'); ?>">
-                                <div class="form-group col-12 col-md-6">
-                                    <!-- <label for="author_name">Имя</label> -->
-                                    <div class="mb-3">
-                                        <input type="text" id="author_name" name="acf[field_675ae76ee8992]" class="form-control" placeholder="Имя*" required>
-                                    </div>
-
-                                </div>
-                                <div class="form-group col-12 col-md-6">
-                                    <!-- <label for="author_email">E-Mail</label> -->
-                                    <div class="mb-3">
-                                        <input type="email" id="author_email" name="acf[field_675ae7d4b0bdc]" class="form-control" placeholder="E-Mail*" required>
-                                    </div>
-
-                                </div>
-                                <div class="form-group col-12">
-                                    <!-- <label for="comment_content">Комментарий</label> -->
-                                    <textarea id="comment_content" name="acf[field_675ae80ab0bdd]" class="form-control" rows="4" placeholder="Ваш комментарий*" required></textarea>
-                                </div>
-                                <div class="form-comment__bottom">* - Обязательно заполнить</div>
-                                <input type="hidden" name="acf[field_related_post]" value="<?php echo get_the_ID(); ?>" />
-                                <div class="col-12">
-                                    <div class="mt-3">
-                                        <button type="submit" class="btn btn-primary px-5">Отправить</button>
-                                    </div>
-                                </div>
-
-                            </form>
-
-                            <?php // else: 
-                            ?>
-                            <!-- <p>Пожалуйста, <a href="<?php // echo esc_url(wp_login_url()); 
-                                                            ?>">войдите</a>, чтобы оставить комментарий.</p> -->
-                            <?php // endif; 
-                            ?>
+                        <div class="btn btn-primary" id="openAdditionalCommentForm">
+                            Написать комментарий
                         </div>
+
                     </div>
+                    <div class="new-comment-form">
+                        <?php // if (is_user_logged_in()): 
+                        ?>
+                        <!-- <h3>Оставить комментарий</h3> -->
+                        <form id="additional-comment-form" method="post" class="row additional-comment-form">
+                            <input type="hidden" name="action" value="handle_additional_comment_ajax">
+                            <input type="hidden" name="additional_comment_nonce" value="<?php echo wp_create_nonce('additional_comment_form'); ?>">
+                            <div class="form-group col-12 col-md-6">
+                                <!-- <label for="author_name">Имя</label> -->
+                                <div class="mb-3">
+                                    <input type="text" id="author_name" name="acf[field_675ae76ee8992]" class="form-control" placeholder="Имя*" required>
+                                </div>
+
+                            </div>
+                            <div class="form-group col-12 col-md-6">
+                                <!-- <label for="author_email">E-Mail</label> -->
+                                <div class="mb-3">
+                                    <input type="email" id="author_email" name="acf[field_675ae7d4b0bdc]" class="form-control" placeholder="E-Mail*" required>
+                                </div>
+
+                            </div>
+                            <div class="form-group col-12">
+                                <!-- <label for="comment_content">Комментарий</label> -->
+                                <textarea id="comment_content" name="acf[field_675ae80ab0bdd]" class="form-control" rows="4" placeholder="Ваш комментарий*" required></textarea>
+                            </div>
+                            <div class="form-comment__bottom">* - Обязательно заполнить</div>
+                            <input type="hidden" name="acf[field_related_post]" value="<?php echo get_the_ID(); ?>" />
+                            <div class="col-12">
+                                <div class="mt-3">
+                                    <button type="submit" class="btn btn-primary px-5">Отправить</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <?php // else: 
+                        ?>
+                        <!-- <p>Пожалуйста, <a href="<?php // echo esc_url(wp_login_url()); 
+                                                        ?>">войдите</a>, чтобы оставить комментарий.</p> -->
+                        <?php // endif; 
+                        ?>
+                    </div>
+
                     <!-- /new-comments -->
 
                 </div>
@@ -1929,16 +1934,16 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
                                                                                                 //$label = $field['choices'][ $value ];
                                                                                                 echo $field['label'] ?></div>
                                                         </li>
-                                                        
-                                                            <li class="leaders__item mb-1">
-                                                                <div class="leaders__item-title">ПСК</div>
-                                                                <?php if (get_field('opisanie_psk')): ?>
+
+                                                        <li class="leaders__item mb-1">
+                                                            <div class="leaders__item-title">ПСК</div>
+                                                            <?php if (get_field('opisanie_psk')): ?>
                                                                 <div class="leaders__item-value">
                                                                     <?= get_field('opisanie_psk') ?>% - <?= get_field('opisanie_psk_2') ?>%
                                                                 </div>
-                                                                 <?php endif; ?>
-                                                            </li>
-                                                       
+                                                            <?php endif; ?>
+                                                        </li>
+
 
                                                     </ul>
                                                     <div class="card__actions mt-3 d-flex">
@@ -2127,6 +2132,26 @@ $apply_now = get_field('apply_now_select_products', $ID); ?>
 </script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
+        const openAdCommentForm = document.getElementById("openAdditionalCommentForm");
+
+        const adCommentForm = document.getElementById("additional-comment-form");
+
+        openAdCommentForm.addEventListener("click", () => {
+            adCommentForm.classList.add("active");
+        });
+
+
+
+
+        const openCommentForm = document.getElementById("openCommentForm");
+
+        const commentForm = document.getElementById("commentForm");
+
+        openCommentForm.addEventListener("click", () => {
+            commentForm.classList.add("active");
+        });
+
         // Получаем все элементы меню
         const menuItems = document.querySelectorAll('.sidebar__menu > li > a');
 

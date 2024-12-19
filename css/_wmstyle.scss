@@ -13,6 +13,23 @@
 // var(--range-value-border)
 // test
 .zaimy-new {
+    #openAdditionalCommentForm,
+    #openCommentForm{
+        color: #fff;
+        cursor: pointer;
+    }
+    .additional-comment-form{
+        display: none;
+        &.active {
+            display: flex;
+        }
+    }
+    .commentForm{
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
 
     .credits__view-title{
         display: none;
